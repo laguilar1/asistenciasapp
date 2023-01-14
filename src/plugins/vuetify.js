@@ -41,6 +41,7 @@ export default createVuetify({
           // primary: '#1867C0',
           primary: '#6200EE',
           secondary: '#CDDC39',
+          background: '#ECEFF1',
 
           // primary: colors.red.darken1, // #E53935
           // secondary: colors.red.lighten4, // #FFCDD2

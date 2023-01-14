@@ -1,7 +1,8 @@
 <script setup>
+import { useUserStore } from "../store/user";
 import { useOnline } from '@vueuse/core'
 const online = useOnline()
-
+const store = useUserStore()
 //menu
 const onlineItems = [
   { id: 1, text: 'Iniciar Sesión', icon: 'mdi-login-variant', link: "/auth?id=123&name=luis&email=luis@mail.com&surname=aguilar" },
@@ -19,7 +20,7 @@ const onlineItems = [
 
     <v-card min-width="300">
       <v-list>
-        <v-list-item title="John Leider" subtitle="count@mail.com">
+        <v-list-item :title="store.user.name" :subtitle="store.user.email">
           <template v-slot:prepend>
             <v-avatar color="grey">
               <v-icon color="white">mdi-account</v-icon>

@@ -10,7 +10,7 @@ const icons = [
 
 </script>
 <template>
-  <v-footer class="d-flex flex-column" app color="black">
+  <v-footer class="d-flex flex-column" app color="">
     <!-- <div class="d-flex w-100 align-center px-4">
       <strong>¡Conecta con nosotros en nuestras redes sociales!</strong>
 
@@ -31,12 +31,19 @@ const icons = [
 
           <div class="d-flex justify-space-between">
             <div>
-              Universidad de Colima
+              <p class="font-italic  d-flex d-sm-none">
+                © Universidad de Colima
+              </p>
+              <p class="font-italic  d-none d-sm-flex">
+                © Derechos Reservados 2022 - 2025 Universidad de Colima
+              </p>
             </div>
             <div>
             </div>
             <div>
-              V1.0.0
+              <p class="font-italic text-primary">
+                  V1.0.0
+              </p>
             </div>
           </div>
 
