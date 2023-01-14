@@ -1,4 +1,6 @@
 <template>
+
+  From home.vue
   <HelloWorld />
 </template>
 

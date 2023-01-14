@@ -1,10 +1,15 @@
 // Composables
 import { createRouter, createWebHistory } from 'vue-router'
 
+import  authGuard  from "../guards/auth-guard"
+import  loginGuard  from "../guards/login-guard"
+import logoutGuard from "../guards/logout-guard"
+
 const routes = [
   {
     path: '/',
-    component: () => import('@/layouts/default/Default.vue'),
+    component: () => import('@/layouts/Default.vue'),
+    beforeEnter: authGuard,
     children: [
       {
         path: '',
@@ -14,7 +19,26 @@ const routes = [
         // which is lazy-loaded when the route is visited.
         component: () => import(/* webpackChunkName: "home" */ '@/views/Home.vue'),
       },
+      // {
+      //   path: '/auth',
+      //   name: 'auth',
+      //   component: () => import('@/views/Auth.vue'),
+      //   // beforeEnter: loginGuard
+      //   meta: {loginGuard: false}
+      // },
     ],
+  },
+  {
+      path: '/auth',
+      name: 'auth',
+      component: () => import('@/views/AuthView.vue'),
+      beforeEnter: loginGuard
+  },
+  {
+      path: '/logout/',
+      name: 'logout',
+      component: () => import('@/views/LogoutView.vue'),
+      beforeEnter: logoutGuard
   },
 ]
 
@@ -24,5 +48,7 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.VITE_BASE_DIR),
   routes,
 })
+
+
 
 export default router

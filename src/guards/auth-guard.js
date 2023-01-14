@@ -1,4 +1,4 @@
-import { useUserStore } from "../stores/user";
+import { useUserStore } from "../store/user";
 import useLogin  from "../composables/useLogin";
 
 const { loginUrl } = useLogin();
@@ -9,9 +9,9 @@ const authGuard = (to, from, next) => {
 
   console.log('guard de auth');
   console.log(store.user.login)
-  
+
   // Si no está logeado entonces entre a logearse
-  if (store.user.login) {  
+  if (store.user.login) {
     return next()
   }
   else {

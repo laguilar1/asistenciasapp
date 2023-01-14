@@ -4,7 +4,7 @@ import { useLocalStorage } from '@vueuse/core';
 
 
 export const useUserStore = defineStore('user', () => {
- 
+
   const user = ref(useLocalStorage('user', {
       id: null,
       name: null,
@@ -23,7 +23,7 @@ export const useUserStore = defineStore('user', () => {
   const changeName = (newName) => {
     user.value.name = newName;
   }
-  
+
   const changeSurName = (newSurName) => {
     user.value.surname = newSurName;
   }
@@ -35,16 +35,16 @@ export const useUserStore = defineStore('user', () => {
   const changeId = (newId) => {
     user.value.id = newId;
   }
-  
+
   const changeLogin = (newLogin) => {
     user.value.login = newLogin;
   }
-  
+
   const changeLogoutUrl = (newLogoutUrl) => {
     user.value.logoutUrl = newLogoutUrl;
   }
-  
-  
+
+
 
   // persistencia de user o todo el state
   // if (localStorage.getItem("user")) {
@@ -65,12 +65,12 @@ export const useUserStore = defineStore('user', () => {
   //   // (state) => { localStorage.setItem("state", JSON.stringify(state)); },
   //   { deep: true }
 
-    
-    
+
+
   // )
 
 
-  //persitencia con 
+  //persitencia con
 
   return { user, changeName, changeEmail, changeId, changeSurName, changeLogin, changeLogoutUrl }
 })
