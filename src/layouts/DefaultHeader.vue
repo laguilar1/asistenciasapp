@@ -1,6 +1,7 @@
 <script setup>
-import { computed } from 'vue';
+  import { computed, ref } from 'vue';
   import { useTheme } from 'vuetify'
+  import DefaultHeaderMenu from './DefaultHeaderMenu.vue'
 
   const theme = useTheme()
   const toggleTheme = () => {
@@ -12,6 +13,7 @@ import { computed } from 'vue';
 const themeIcon = computed(() => {
   return theme.global.current.value.dark ? 'mdi-weather-sunny' : 'mdi-weather-night'
 })
+
 
 </script>
 <template>
@@ -29,18 +31,21 @@ const themeIcon = computed(() => {
 
     <v-spacer></v-spacer>
 
+    <v-btn icon to="/">
+      <v-icon> mdi-home-outline </v-icon>
+    </v-btn>
+
     <v-btn icon @click="toggleTheme">
       <v-icon>
         {{ themeIcon }}
       </v-icon>
     </v-btn>
 
+    <DefaultHeaderMenu/>
 
 
 
-    <template v-slot:append>
-      <v-btn icon="mdi-dots-vertical"></v-btn>
-    </template>
+
   </v-app-bar>
 </template>
 

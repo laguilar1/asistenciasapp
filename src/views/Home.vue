@@ -1,7 +1,9 @@
 <template>
+  <v-container fluid>
+    From home View
+    <HelloWorld />
 
-  From home.vue
-  <HelloWorld />
+  </v-container>
 </template>
 
 <script setup>

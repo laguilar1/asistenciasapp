@@ -40,6 +40,12 @@ const routes = [
       component: () => import('@/views/LogoutView.vue'),
       beforeEnter: logoutGuard
   },
+  {
+      path: '/refresh/',
+      name: 'refresh',
+      component: () => import('@/views/LogoutView.vue'),
+      beforeEnter: logoutGuard
+  },
 ]
 
 const router = createRouter({
