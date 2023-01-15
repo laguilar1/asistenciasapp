@@ -1,5 +1,18 @@
 <script setup>
 import { ref } from 'vue';
+import { useOnline } from '@vueuse/core'
+import HomeSubjectsList from '@/components/HomeSubjectsList.vue'
+
+const online = useOnline()
+const props = defineProps({
+  hora: {
+    type: String,
+    required: true
+  },
+})
+
+// TODO: CREAR UN COMPOSABLE DE ESTAS FUNCIONES
+
   const alumns = ref([
     {
       id:1,
@@ -50,9 +63,9 @@ const statusColor = (status) => {
 }
 
 const statusIcon = (status) => {
-  if (status === '1') { return 'mdi-check' }
-  else if (status === '2') { return 'mdi-exclamation' }
-  return 'mdi-close'
+  if (status === '1') { return 'mdi-check-bold' }
+  else if (status === '2') { return 'mdi-exclamation-thick' }
+  return 'mdi-close-thick'
   // return 'mdi-circle-off-outline'
 
   // if (status === '1') { return 'mdi-timer-check' }
@@ -84,6 +97,15 @@ const changeStatus = (alumn_id,status) => {
 
 }
 
+// Send Button
+const loading = ref(false);
+const load = () => {
+  loading.value = true
+  setTimeout(() => (loading.value = false), 3000)
+}
+
+
+
 </script>
 <template>
 
@@ -91,15 +113,15 @@ const changeStatus = (alumn_id,status) => {
       <v-col v-for="alumn in alumns" :key="alumn.title"
             cols="12" sm="6" md="4" lg="3" xl="2" >
 
-
           <v-card @click="changeStatus(alumn.id,alumn.status)" class="ma-2 pa-0">
-
-
               <v-list>
-                <v-list-item :title="alumn.title" :subtitle="textStatus(alumn.status)" >
+                <v-list-item :title="alumn.title" :subtitle="textStatus(alumn.status)+' Hora: '+hora" >
                   <template v-slot:prepend>
-                    <v-avatar :color="statusColor(alumn.status)">
+                    <!-- <v-avatar :color="statusColor(alumn.status)">
                       <v-icon :icon="statusIcon(alumn.status)" color="white"></v-icon>
+                    </v-avatar> -->
+                    <v-avatar >
+                      <v-icon :icon="statusIcon(alumn.status)" :color="statusColor(alumn.status)"></v-icon>
                     </v-avatar>
                   </template>
 
@@ -110,12 +132,22 @@ const changeStatus = (alumn_id,status) => {
 
                 </v-list-item>
               </v-list>
-
-
           </v-card>
-
-
       </v-col>
-    </v-row>
 
+      <!-- TODO: El botón solo estára disponible si tiene conexión a internet, deshabilitar botón y poner icono de carita triste  mdi-emoticon-sad-outlin -->
+      <v-col col="12" sm="12" class="d-flex justify-space-around align-center ma-2 pa-2">
+        <v-btn
+          prepend-icon="mdi-check"
+          :loading="loading"
+          :disabled="loading"
+          color="secondary"
+          @click="load()"
+          size="large" rounded="pill">
+           {{ online? 'Enviar Asistencia':'Sin conexión' }}
+        </v-btn>
+      </v-col>
+
+      <HomeSubjectsList />
+    </v-row>
 </template>

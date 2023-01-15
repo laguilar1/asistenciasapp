@@ -1,15 +1,14 @@
 <script setup>
 import HelloWorld from '@/components/HelloWorld.vue'
-import HomeAlumnsList from '@/components/HomeAlumnsList.vue'
-import HomeSubjectsList from '@/components/HomeSubjectsList.vue'
+import HomeAlumnsTabs from '@/components/HomeAlumnsTabs.vue'
+
 </script>
 
 <template>
   <v-container fluid>
     <!-- From home View -->
     <!-- <HelloWorld /> -->
-    <HomeAlumnsList/>
-    <HomeSubjectsList/>
+    <HomeAlumnsTabs/>
 
   </v-container>
 </template>
