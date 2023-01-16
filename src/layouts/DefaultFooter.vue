@@ -6,7 +6,7 @@ const icons = [
   'mdi-linkedin',
   'mdi-instagram',
 ]
-
+const appVersion = import.meta.env.VITE_VERSION;
 
 </script>
 <template>
@@ -42,7 +42,7 @@ const icons = [
             </div>
             <div>
               <p class="font-italic text-primary">
-                  V1.0.0
+                  V{{ appVersion }}
               </p>
             </div>
           </div>

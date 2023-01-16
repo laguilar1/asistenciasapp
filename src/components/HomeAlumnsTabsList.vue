@@ -1,7 +1,9 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useOnline } from '@vueuse/core'
-import HomeSubjectsList from '@/components/HomeSubjectsList.vue'
+
+import useStatus from '../composables/useStatus'
+const { statusIcon, statusColor, statusText, statusNext } = useStatus();
 
 const online = useOnline()
 const props = defineProps({
@@ -10,8 +12,6 @@ const props = defineProps({
     required: true
   },
 })
-
-// TODO: CREAR UN COMPOSABLE DE ESTAS FUNCIONES
 
   const alumns = ref([
     {
@@ -56,54 +56,34 @@ const props = defineProps({
     },
 ]);
 
-const statusColor = (status) => {
-  if (status === '1') { return 'green' }
-  else if (status === '2') { return 'warning' }
-  return 'red'
-}
 
-const statusIcon = (status) => {
-  if (status === '1') { return 'mdi-check-bold' }
-  else if (status === '2') { return 'mdi-exclamation-thick' }
-  return 'mdi-close-thick'
-  // return 'mdi-circle-off-outline'
 
-  // if (status === '1') { return 'mdi-timer-check' }
-  // else if (status === '2') { return 'mdi-timer-alert' }
-  // return 'mdi-timer-off'
-}
-
-const nextStatus = (status) => {
-
-  if (status === '1') { return '2' }
-  else if (status === '2') { return '3' }
-  return '1';
-}
-
-const textStatus = (status) => {
-
-  if (status === '1') { return 'Asistencia' }
-  else if (status === '2') { return 'Retardo' }
-  return 'Falta';
-}
-
+// TODO: DEBE CAMBIAR UN STORE, PARA PASARLO A COMPOSABLE
 const changeStatus = (alumn_id,status) => {
   // Buscar en el array de objetos alumno con un id
   alumns.value.forEach(element => {
     if (element.id === alumn_id) {
-      element.status = nextStatus(status);
+      element.status = statusNext(status);
     }
   });
 
 }
 
-// Send Button
+// Example send button
 const loading = ref(false);
 const load = () => {
   loading.value = true
   setTimeout(() => (loading.value = false), 3000)
 }
 
+const isDisabledButton = computed(() => {
+  // console.log(online.value);
+  // console.log(loading.value);
+  // if (!online.value) { return true; } //sin conexion
+  // else if (loading.value) { return true; } // cargando loading
+  return (!online.value || loading.value) ? true : false;
+  // return false;
+})
 
 
 </script>
@@ -115,7 +95,7 @@ const load = () => {
 
           <v-card @click="changeStatus(alumn.id,alumn.status)" class="ma-2 pa-0">
               <v-list>
-                <v-list-item :title="alumn.title" :subtitle="textStatus(alumn.status)+' Hora: '+hora" >
+                <v-list-item :title="alumn.title" :subtitle="statusText(alumn.status)+' Hora: '+hora" >
                   <template v-slot:prepend>
                     <!-- <v-avatar :color="statusColor(alumn.status)">
                       <v-icon :icon="statusIcon(alumn.status)" color="white"></v-icon>
@@ -140,14 +120,14 @@ const load = () => {
         <v-btn
           prepend-icon="mdi-check"
           :loading="loading"
-          :disabled="loading"
+          :disabled="isDisabledButton"
           color="secondary"
           @click="load()"
           size="large" rounded="pill">
-           {{ online? 'Enviar Asistencia':'Sin conexión' }}
+           {{ online? 'Guardar asistencias':'Sin conexión' }}
         </v-btn>
       </v-col>
 
-      <HomeSubjectsList />
+
     </v-row>
 </template>

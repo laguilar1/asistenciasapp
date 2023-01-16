@@ -35,7 +35,7 @@ const themeIcon = computed(() => {
 
     <v-spacer></v-spacer>
 
-    <v-btn icon to="/">
+    <v-btn icon to="/" exact>
       <v-icon> mdi-home-outline </v-icon>
     </v-btn>
 
