@@ -17,21 +17,25 @@ const themeIcon = computed(() => {
 
 </script>
 <template>
-  <v-app-bar color="secondary" density="compact">
+  <v-app-bar color="primary" density="compact">
 
     <!-- <template v-slot:prepend>
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
     </template> -->
 
-    <v-img class="mx-2"
-      src="https://dgesui.ses.sep.gob.mx/sep.subsidioentransparencia.mx/images/universidades/escudos/UCOL.png"
-      contain>
+    <!-- Mediano y grande -->
+    <v-img class="mx-4 d-none d-sm-flex"
+      src="../assets/logo.png" max-height="120" max-width="120" contain>
     </v-img>
 
-    <v-spacer></v-spacer>
-    <v-app-bar-title>
-      Control de asistencias
-    </v-app-bar-title>
+    <v-img class="mx-4 d-flex d-sm-none"
+      src="../assets/logo_.png" max-height="50" max-width="50" contain>
+    </v-img>
+
+    <!-- <v-spacer></v-spacer> -->
+    <!-- <v-app-bar-title class="d-flex d-lg-flex">
+      <span >Sistema de Asistencias</span>
+    </v-app-bar-title> -->
 
     <v-spacer></v-spacer>
 

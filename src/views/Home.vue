@@ -4,10 +4,20 @@ import { storeToRefs } from 'pinia';
 // import HomeAlumnsTabs from '@/components/HomeAlumnsTabs.vue'
 import { useUserStore } from "../store/user";
 import { useDataStore } from "../store/data";
-
-
+import { inject } from 'vue'
 
 const userStore = useUserStore()
+const axios = inject('axios')  // inject axios
+
+// console.log(axios);
+const getList = () => {
+  axios
+    .get('https://jsonplaceholder.typicode.com/users')
+    .then((response) => {
+      console.log(response.data)
+    });
+};
+// getList();
 // const dataStore = useDataStore()
 
 // // Para no perder la reactividad
