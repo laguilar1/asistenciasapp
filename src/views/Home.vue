@@ -33,8 +33,8 @@ const getList = () => {
     <!-- From home View -->
     <!-- <HelloWorld /> -->
     <!-- <HomeAlumnsTabs/> -->
-    <p class="text-center text-h6 font-weight-regular mt-2">¡Hola, {{ userStore.user.name }}!</p>
-    <p class="text-center text-subtitle-1 font-weight-regular">Correo: {{ userStore.user.email }}</p>
+    <p class="font-weight-bold text-h5 font-weight-regular mt-2">¡Hola, {{ userStore.user.name }}!</p>
+    <p class="font-italic font-weight-light">{{ userStore.user.email }}</p>
     <v-divider></v-divider>
 
     <HomeSubjectsList />

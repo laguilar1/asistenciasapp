@@ -39,11 +39,11 @@ const themeIcon = computed(() => {
 
     <v-spacer></v-spacer>
 
-    <v-btn icon to="/" exact>
+    <v-btn selected-class="" to="/" exact  icon>
       <v-icon> mdi-home-outline </v-icon>
     </v-btn>
 
-    <v-btn icon @click="toggleTheme">
+    <v-btn @click="toggleTheme" icon>
       <v-icon>
         {{ themeIcon }}
       </v-icon>
@@ -58,5 +58,8 @@ const themeIcon = computed(() => {
 </template>
 
 <style>
-
+/* a #boton .v-btn--active .sel{
+  background: blue !important;
+  color: initial;
+} */
 </style>

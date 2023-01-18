@@ -24,16 +24,19 @@ const grados = [
     title: '1°A',
     value: 1,
     icon: 'mdi-flag',
+    finalized: true,
   },
   {
     title: '1°B',
     value: 2,
     icon: 'mdi-flag',
+    finalized: true,
   },
   {
     title: '2°A',
     value: 3,
     icon: 'mdi-flag',
+    finalized: false,
   },
 ]
 
@@ -44,7 +47,7 @@ const grados = [
 
   <!-- Hello world Home Subject list -->
 
-  <div class="text-subtitle-2 mt-4 mb-2">Plantel: Bachillerato Tecnico No... </div>
+  <div class="text-subtitle-2 mt-4 mb-2">Bachillerato 33 </div>
   <v-expansion-panels variant="accordion" class="mt-4">
     <v-expansion-panel v-for="i in 3" :key="i" title="Carrera: Ingenieria en Sistemas Computacionales">
       <v-expansion-panel-text  id="expansion-whitout-padding">
@@ -55,15 +58,16 @@ const grados = [
           <v-expansion-panel v-for="i in 3" :key="i" title="Materia con un nombre largo para testear la visualización del contenido">
             <v-expansion-panel-text>
 
-              <v-list-item v-for="(item, i) in grados" :key="i" :value="item" active-color="primary" to='/alumns'>
-                <template v-slot:prepend>
+              <v-list-item v-for="(item, i) in grados" :key="i" :value="item" active-color="primary" to='/alumns' :class="item.finalized ?'bg-green-lighten-5' : ''">
+                <!-- <template v-slot:prepend>
                   <v-icon :icon="item.icon"></v-icon>
-                </template>
+                </template> -->
 
-                <v-list-item-title v-text="item.title"></v-list-item-title>
+                <v-list-item-title v-text="item.title" ></v-list-item-title>
 
                 <template v-slot:append>
-                  <v-btn color="grey-lighten-1" icon="mdi-sync" variant="text"></v-btn>
+                  <!-- <v-btn color="green darken-3" :icon="item.finalized ? 'mdi-check' : ''" variant="text"></v-btn> -->
+                  <v-icon color="green darken-4" :icon="item.finalized ? 'mdi-check' : ''" variant="text"></v-icon>
                 </template>
 
               </v-list-item>
