@@ -31,17 +31,17 @@ const appVersion = import.meta.env.VITE_VERSION;
 
           <div class="d-flex justify-space-between">
             <div>
-              <p class="font-italic  d-flex d-sm-none">
+              <p class="font-weight-light  d-flex d-sm-none">
                 © Universidad de Colima
               </p>
-              <p class="font-italic  d-none d-sm-flex">
-                © Derechos Reservados 2022 - 2025 Universidad de Colima
+              <p class="font-weight-light  d-none d-sm-flex">
+                © Derechos Reservados 2022-2025 Universidad de Colima
               </p>
             </div>
             <div>
             </div>
             <div>
-              <p class="font-italic text-primary">
+              <p class="font-weight-light text-primary">
                   V{{ appVersion }}
               </p>
             </div>

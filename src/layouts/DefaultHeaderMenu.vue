@@ -5,9 +5,8 @@ const online = useOnline()
 const store = useUserStore()
 //menu
 const onlineItems = [
-  { id: 1, text: 'Iniciar Sesión', icon: 'mdi-login-variant', link: "/auth?id=123&name=luis&email=luis@mail.com&surname=aguilar" },
-  { id: 2, text: 'Refrescar', icon: 'mdi-web-refresh', link: "/refresh" },
-  { id: 3, text: 'Cerrar Sesión', icon: 'mdi-logout-variant', link: "/logout" },
+  { id: 1, text: 'Refrescar', icon: 'mdi-web-refresh', link: "/refresh" },
+  { id: 2, text: 'Cerrar Sesión', icon: 'mdi-logout-variant', link: "/logout" },
 
 ];
 </script>

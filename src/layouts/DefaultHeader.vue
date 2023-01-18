@@ -34,7 +34,7 @@ const themeIcon = computed(() => {
 
     <!-- <v-spacer></v-spacer> -->
     <!-- <v-app-bar-title class="d-flex d-lg-flex">
-      <span >Sistema de Asistencias</span>
+      <span >Control de asistencias</span>
     </v-app-bar-title> -->
 
     <v-spacer></v-spacer>

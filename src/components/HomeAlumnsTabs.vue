@@ -9,7 +9,7 @@ let tab = ref('1')
 console.log(tab.value);
 </script>
 <template>
-  <div class="text-subtitle-2 ma-1">Lista de asistencia de alumnos materia # semestre # </div>
+  <!-- <div class="text-subtitle-2 ma-1">Lista de asistencia de alumnos materia # semestre # </div> -->
   <v-card>
       <v-tabs v-model="tab" color="ssecondary" align-tabs="end" grow>
         <v-tab value="1">1
