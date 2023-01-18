@@ -11,7 +11,7 @@ import 'vuetify/styles'
 // Composables
 import { createVuetify } from 'vuetify'
 import colors from 'vuetify/lib/util/colors'
-
+// import { md3 } from 'vuetify/blueprints'
 // const myCustomLightTheme = {
 //   dark: false,
 //   colors: {
@@ -29,6 +29,7 @@ import colors from 'vuetify/lib/util/colors'
 // }
 // https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
 export default createVuetify({
+  // blueprint: md3,
   theme: {
     themes: {
       // defaultTheme: 'myCustomLightTheme',
@@ -39,8 +40,8 @@ export default createVuetify({
       light: {
         colors: {
           // primary: '#1867C0',
-          primary: '#6200EE',
-          secondary: '#CDDC39',
+          primary: '#5F5EA3',
+          secondary: '#A3BF42',
           background: '#ECEFF1',
 
           // primary: colors.red.darken1, // #E53935
@@ -49,9 +50,9 @@ export default createVuetify({
       },
       dark: {
         colors: {
-          background: '#333333',
-          primary: '#6200EE',
-          secondary: '#CDDC39',
+          background: '#444444',
+          primary: '#5F5EA3',
+          secondary: '#A3BF42',
         },
       },
     },

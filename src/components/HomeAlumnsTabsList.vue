@@ -20,7 +20,7 @@ const props = defineProps({
       color: 'blue',
       icon: 'mdi-clipboard-text',
       // subtitle: 'Jan 20, 2014',
-      title: 'Nombre del Alumno 1',
+      title: 'Nombre del Alumno 1 Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate vel ',
     },
     {
       id:2,
@@ -28,7 +28,7 @@ const props = defineProps({
       color: 'amber',
       icon: 'mdi-gesture-tap-button',
       // subtitle: 'Jan 10, 2014',
-      title: 'Nombre del alumno 2',
+      title: 'Nombre del alumno 2 Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate vel ',
     },
     {
       id:3,
@@ -36,7 +36,7 @@ const props = defineProps({
       color: 'amber',
       icon: 'mdi-gesture-tap-button',
       // subtitle: 'Jan 10, 2014',
-      title: 'Nombre del alumno 2',
+      title: 'Nombre del alumno 2 Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate vel ',
     },
     {
       id:4,
@@ -121,7 +121,7 @@ const isDisabledButton = computed(() => {
           prepend-icon="mdi-check"
           :loading="loading"
           :disabled="isDisabledButton"
-          color="secondary"
+          color="primary"
           @click="load()"
           size="large" rounded="pill">
            {{ online? 'Guardar asistencias':'Sin conexión' }}

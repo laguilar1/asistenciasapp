@@ -47,11 +47,11 @@ const grados = [
   <div class="text-subtitle-2 mt-4 mb-2">Plantel: Bachillerato Tecnico No... </div>
   <v-expansion-panels variant="accordion" class="mt-4">
     <v-expansion-panel v-for="i in 3" :key="i" title="Carrera: Ingenieria en Sistemas Computacionales">
-      <v-expansion-panel-text>
+      <v-expansion-panel-text  id="expansion-whitout-padding">
         <!-- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor -->
         <!-- <v-list :items="grupos" to='/alumns'></v-list> -->
 
-        <v-expansion-panels variant="accordion" class="mt-4">
+        <v-expansion-panels variant="accordion" class="ma-0">
           <v-expansion-panel v-for="i in 3" :key="i" title="Materia con un nombre largo para testear la visualización del contenido">
             <v-expansion-panel-text>
 
@@ -82,3 +82,10 @@ const grados = [
 
 
 </template>
+<style scoped>
+/* #expansion-whitout-padding .v-expansion-panel-text__wrapper { */
+#expansion-whitout-padding:deep(.v-expansion-panel-text__wrapper){
+  padding-right: 10px;
+  padding-left: 10px;
+}
+</style>

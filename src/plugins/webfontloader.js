@@ -9,7 +9,8 @@
 
   webFontLoader.load({
     google: {
-      families: ['Roboto:100,300,400,500,700,900&display=swap'],
+      // families: ['Roboto:100,300,400,500,700,900&display=swap'],
+      families: ['Poppins:100,300,400,500,700,900&display=swap'], //Descargar la fuente
     },
   })
 }

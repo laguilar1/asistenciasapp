@@ -39,7 +39,7 @@
     router.replace({ path: '/' });
   } else {
     //Redirect si no hay session
-    window.location.href = loginUrl();
+    window.location.href = loginUrl()+'/';
   }
 
 

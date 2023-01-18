@@ -14,9 +14,9 @@ const useStatus = () => {
   }
 
   const statusIcon = (status) => {
-    if (status === '1') { return 'mdi-check-bold' }
+    if (status === '1') { return 'mdi-check-circle-outline' }
     else if (status === '2') { return 'mdi-clock-outline' }
-    return 'mdi-close-thick'
+    return 'mdi-close-circle-outline'
   }
 
   const statusNext = (status) => {

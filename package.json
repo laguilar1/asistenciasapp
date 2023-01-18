@@ -9,6 +9,7 @@
   "dependencies": {
     "@mdi/font": "7.0.96",
     "@vueuse/core": "^9.10.0",
+    "axios": "^1.2.2",
     "pinia": "^2.0.23",
     "register-service-worker": "^1.7.2",
     "roboto-fontface": "*",

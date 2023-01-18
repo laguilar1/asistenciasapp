@@ -17,8 +17,8 @@ store.user.logoutUrl = null;
 // localStorage.clear();
 // localStorage.removeItem("user");
 //Redirect
-// window.location.href = loginUrl() + 'logout/';
-window.location.href = loginUrl();
+window.location.href = loginUrl() + '/logout/';
+// window.location.href = loginUrl();
 
 
 </script>
