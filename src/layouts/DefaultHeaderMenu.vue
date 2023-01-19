@@ -1,14 +1,20 @@
 <script setup>
 import { useUserStore } from "../store/user";
 import { useOnline } from '@vueuse/core'
+
+import useMode from '../composables/useMode'
+
 const online = useOnline()
 const store = useUserStore()
+const { toggleTheme, themeIcon, themeIconText } = useMode()
 //menu
 const onlineItems = [
   { id: 1, text: 'Refrescar', icon: 'mdi-web-refresh', link: "/refresh" },
   { id: 2, text: 'Cerrar Sesión', icon: 'mdi-logout-variant', link: "/logout" },
 
 ];
+
+
 </script>
 <template>
 
@@ -29,6 +35,16 @@ const onlineItems = [
       </v-list>
 
       <v-divider></v-divider>
+
+      <v-list>
+        <v-list-subheader>Configuración</v-list-subheader>
+          <v-list-item value="1" @click="toggleTheme">
+            <template v-slot:prepend>
+              <v-icon :icon="themeIcon"></v-icon>
+            </template>
+            <v-list-item-title>{{ themeIconText }}</v-list-item-title>
+          </v-list-item>
+      </v-list>
 
       <v-list :disabled="!online">
         <v-list-subheader>Acciones</v-list-subheader>

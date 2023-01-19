@@ -1,20 +1,9 @@
 <script setup>
-  import { computed, ref } from 'vue';
-  import { useTheme } from 'vuetify'
+  import { useRouter, useRoute } from 'vue-router'
   import DefaultHeaderMenu from './DefaultHeaderMenu.vue'
 
-  const theme = useTheme()
-  const toggleTheme = () => {
-    theme.global.name.value =
-      theme.global.current.value.dark ? 'light'
-        : 'dark'
-}
-
-const themeIcon = computed(() => {
-  return theme.global.current.value.dark ? 'mdi-weather-sunny' : 'mdi-weather-night'
-})
-
-
+  const router = useRouter()
+  const route = useRoute()
 </script>
 <template>
   <v-app-bar color="primary" density="compact">
@@ -39,20 +28,11 @@ const themeIcon = computed(() => {
 
     <v-spacer></v-spacer>
 
-    <v-btn selected-class="" to="/" exact  icon>
+    <v-btn selected-class="" @click.stop="router.push('/')" exact-path  icon>
       <v-icon> mdi-home-outline </v-icon>
     </v-btn>
 
-    <v-btn @click="toggleTheme" icon>
-      <v-icon>
-        {{ themeIcon }}
-      </v-icon>
-    </v-btn>
-
     <DefaultHeaderMenu/>
-
-
-
 
   </v-app-bar>
 </template>
