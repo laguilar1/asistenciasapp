@@ -1,9 +1,9 @@
 <script setup>
-  import { useRouter, useRoute } from 'vue-router'
+  import { useRouter } from 'vue-router'
   import DefaultHeaderMenu from './DefaultHeaderMenu.vue'
 
   const router = useRouter()
-  const route = useRoute()
+
 </script>
 <template>
   <v-app-bar color="primary" density="compact">

@@ -25,7 +25,7 @@
   store.user.email = email;
   store.user.surname = surname;
   store.user.login = true;
-  store.user.logoutUrl = loginUrl();
+
 
 
   console.log(store.user.email, 'store email');

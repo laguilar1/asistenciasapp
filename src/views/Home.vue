@@ -7,7 +7,12 @@ import { useDataStore } from "../store/data";
 import { inject } from 'vue'
 
 const userStore = useUserStore()
+const dataStore = useDataStore()
 const axios = inject('axios')  // inject axios
+
+console.log(dataStore.hola);
+
+
 
 // console.log(axios);
 const getList = () => {
@@ -33,8 +38,8 @@ const getList = () => {
     <!-- From home View -->
     <!-- <HelloWorld /> -->
     <!-- <HomeAlumnsTabs/> -->
-    <p class="font-weight-bold text-h5 font-weight-regular mt-2">¡Hola, {{ userStore.user.name }}!</p>
-    <p class="font-italic font-weight-light">{{ userStore.user.email }}</p>
+    <p class="text-center font-weight-bold text-h5 font-weight-regular mt-2">¡Hola, {{ userStore.user.name }}!</p>
+    <p class="text-center font-italic font-weight-light">{{ userStore.user.email }}</p>
     <v-divider></v-divider>
 
     <HomeSubjectsList />
