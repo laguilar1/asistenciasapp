@@ -47,22 +47,22 @@ export default ({ mode }) => {
           // navigateFallbackDenylist: [/^\/backoffice/], //Excluir rutas
           // Alguna estretegia para la api
           runtimeCaching: [
-            // {
-            //   urlPattern: ['**/*.{js,css,html,ico,png,svg}'],
-            //   // urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
-            // pattern: /^https:\/\/cenedic4.ucol.mx\/pwasistencias/,
-            //   handler: 'CacheFirst',
-            //   options: {
-            //     cacheName: 'local-api-cache',
-            //     expiration: {
-            //       maxEntries: 10,
-            //       maxAgeSeconds: 60 * 60 * 24 * 365 // <== 365 days
-            //     },
-            //     cacheableResponse: {
-            //       statuses: [0, 200]
-            //     }
-            //   }
-            // },
+            {
+              // urlPattern: ['**/*.{js,css,html,ico,png,svg}'],
+              // urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+              urlPattern: /^https:\/\/cenedic4.ucol.mx\/newasistencias\/index.php\/profesores\/plantel\/.*/i,
+              handler: 'CacheFirst',
+              options: {
+                cacheName: 'local-api-cache',
+                expiration: {
+                  maxEntries: 10,
+                  maxAgeSeconds: 60 * 60 * 24 * 365 // <== 365 days
+                },
+                cacheableResponse: {
+                  statuses: [0, 200]
+                }
+              }
+            },
           ]
         },
         includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],

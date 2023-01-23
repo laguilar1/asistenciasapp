@@ -29,7 +29,15 @@ const app = createApp(App)
 
 registerPlugins(app)
 
+// console.log('url back: ',import.meta.env.VITE_URL_BACK);
+// axios.create({
+//   baseURL: import.meta.env.VITE_URL_BACK,
+//   // timeout: 1000,
+//   // headers: {'X-Custom-Header': 'foobar'}
+// });
+
 app.use(VueAxios, axios) //axios
+// app.use(VueAxios, { $myHttp: axios, axios2: axios2 })
 
 axios.interceptors.request.use(requestSuccess, requestError); // interceptor axios
 axios.interceptors.response.use(responseSuccess, responseError); // interceptor axios
