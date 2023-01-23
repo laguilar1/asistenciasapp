@@ -4,37 +4,16 @@ import { defineStore } from 'pinia'
 
 // export const useDataStore = defineStore('data', {
 export const useDataStore = defineStore('data', () => {
-  // state: () => ({
-  //   hola: 'mundo',
-  //   schoolsArr: [],
-  // }),
 
-    const hola = ref('mundo')
-    const schoolsArr = ref([])
-    const elementos = ref({
-        uno:'example',
-        dos: 'example',
-    });
+  const schools = ref([])
 
-    // function loadSchools(items) {
-    //   console.log('load schools');
-    //   this.schoolsArr = items;
-    // }
+    const loadSchools = (items) => {
+      schools.value = items;
+    }
 
-    // function reloadSchools(items) {
-    //   console.log('reload schools');
-    //   this.schoolsArr = items;
-    // }
+    const cleanSchoools = () => {
+        schools.value = [];
+    }
 
-
-
-    // setCheckList()
-    // showSchools()
-    // getStatus..
-
-
-  // const changeTheme = (newTheme) => {
-  //   app.value.theme = newTheme;
-  // }
-  return { hola, schoolsArr, elementos }
+  return { schools, cleanSchoools, loadSchools}
 })

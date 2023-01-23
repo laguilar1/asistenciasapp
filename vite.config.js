@@ -50,9 +50,10 @@ export default ({ mode }) => {
             // {
             //   urlPattern: ['**/*.{js,css,html,ico,png,svg}'],
             //   // urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+            // pattern: /^https:\/\/cenedic4.ucol.mx\/pwasistencias/,
             //   handler: 'CacheFirst',
             //   options: {
-            //     cacheName: 'google-fonts-cache',
+            //     cacheName: 'local-api-cache',
             //     expiration: {
             //       maxEntries: 10,
             //       maxAgeSeconds: 60 * 60 * 24 * 365 // <== 365 days
