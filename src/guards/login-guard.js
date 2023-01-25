@@ -1,43 +1,37 @@
 import router from '@/router'
-
 import { useUserStore } from "../store/user";
-import useLogin  from "../composables/useLogin";
+import useLogin from "../composables/useLogin";
+
+import localforage from "localforage";
 
 const { loginUrl } = useLogin();
 // const router = useRouter();
 
-const loginGuard = (to, from, next) => {
+const loginGuard = async (to, from, next) => {
 
   const store = useUserStore();
+  const prevUrl = document.referrer;
+  // console.log('guard login');
+  // console.log(from)
+  // // Verificar que el redireccionamiento sea del mismo dominio
+  // console.log(prevUrl, 'prev url -----------------')
+  // console.log(window.location.host, 'window location host -----------------')
 
-  console.log('guard login');
-  console.log(from)
+  // TODO: SOLO EN PRODUCCION
+  // if (prevUrl !== 'https://wayf.ucol.mx/') {
+  //   console.log('Fuente No confiable de autenticacion')
+  //   // Borrar store y caché (crear)
+  //   try {
+  //     store.cleanStore();
+  //     await localforage.clear();
+  //     await localforage.clear();
+  //     window.location.href = loginUrl() + '/logout/';
+  //     return false
+  //   } catch (err) { console.log(err);}
+  //   //window.location.href = loginUrl() + '/logout/';
+  // }
 
-  // Verificar que el redireccionamiento sea del mismo dominio
-  let prevUrl = document.referrer;
-  console.log(prevUrl, 'prev url -----------------')
-  console.log(window.location.host, 'window location host -----------------')
-
-  // Url manual TODO: En produccion se habilita
-  // if (!prevUrl) { window.location.href = loginUrl(); }
-  // Servidor externo
-  // TODO: checar la url exacta del redireccionamiento window.location.host debe ser igual a la url de redirect
-  if (prevUrl.indexOf(window.location.host) !== -1) {
-    // Accion que se hace si la accion anterior no es del mismo dominio
-    window.location.href = loginUrl(); //devolver a pagina de inicio de session
-  }
-
-
-  // Si no está autenticado, carga los datos
-  if (!store.user.login) {
-    return next()
-  }
-  else {
-    // Si lo está redirecciona a principal
-    // router.replace({ path: '/' });
-    router.push({ path: '/' });
-
-  }
+  return next()
 
 }
 export default loginGuard

@@ -4,7 +4,8 @@ const useStatus = () => {
   const statusText = (status) => {
     if (status === '1') { return 'Asistencia' }
     else if (status === '2') { return 'Retardo' }
-    return 'Falta';
+    else if (status === '3') { return 'Falta' }
+    return 'Justificado';
   }
 
   const statusColor = (status) => {

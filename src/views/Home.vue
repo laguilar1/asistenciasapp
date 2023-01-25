@@ -1,5 +1,6 @@
 <script setup>
 import HomeSubjectsList from '@/components/HomeSubjectsList.vue'
+import ErrorComponent from '@/components/ErrorComponent.vue'
 import BarLoading from '@/components/BarLoading.vue'
 import { onMounted } from 'vue'
 //Store
@@ -8,7 +9,7 @@ import { useUserStore } from "../store/user";
 import  useSchool  from "../composables/useSchool";
 
 const userStore = useUserStore()
-const { loading, fetchSchool } = useSchool()
+const { loading, fetchSchool, errorLoading } = useSchool()
 
 
 onMounted(() => {
@@ -24,7 +25,10 @@ onMounted(() => {
       <p class="text-center font-italic font-weight-light">{{ userStore.user.email }}</p>
       <v-divider></v-divider>
       <BarLoading v-if="loading" />
-      <HomeSubjectsList v-else/>
+
+      <ErrorComponent v-if="!loading && errorLoading"/>
+      <HomeSubjectsList v-if="!loading && !errorLoading" />
+
     </v-container>
 
 </template>

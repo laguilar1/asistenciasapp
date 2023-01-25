@@ -8,6 +8,7 @@ const useSchool = () => {
   const axios = inject('axios')  // inject axios
   // .get('https://jsonplaceholder.typicode.com/users')
   const loading = ref(false);
+  const errorLoading = ref(false);
 
   // console.log('url back: ',import.meta.env.VITE_URL_BACK);
 
@@ -15,14 +16,19 @@ const useSchool = () => {
   const fetchSchool = () => {
 
     loading.value = true;
+    errorLoading.value = false;
 
     setTimeout(() => {
-      axios.get(import.meta.env.VITE_URL_BACK+'/profesores/plantel/3105')
-      // axios.get('/profesores/plantel/3105')
+      axios.get('/profesores/asistencia/3105')
         .then((response) => {
-          console.log(response.data.datos)
-          dataStore.loadSchools(response.data.datos)
+          if (response.statusText === 'OK') {
+            dataStore.loadSchools(response.data.datos)
+            loading.value = false;
+          }
+        }).catch((error) => {
+          console.error('Error en la petición', error)
           loading.value = false;
+          errorLoading.value = true;
         });
     }, 1000);
   };
@@ -30,6 +36,7 @@ const useSchool = () => {
   return {
     loading,
     fetchSchool,
+    errorLoading,
   }
 }
 

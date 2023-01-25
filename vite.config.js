@@ -72,7 +72,7 @@ export default ({ mode }) => {
           name: 'Asisencias',
           short_name: 'Asistencias',
           description: 'PWA Asisencias',
-          theme_color: '#ffffff',
+          theme_color: '#6200EE',
           background_color: '#ffffff',
           display: "standalone",
           // start_url: "/",
