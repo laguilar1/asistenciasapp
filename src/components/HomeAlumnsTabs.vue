@@ -3,9 +3,16 @@ import { ref } from 'vue';
 import { useRoute } from 'vue-router'
 import HomeAlumnsTabsList from '@/components/HomeAlumnsTabsList.vue'
 
+import useSchool from '../composables/useSchool'
+
 const route = useRoute()
 const { salon } = route.params;
 const { veces } = route.params;
+const { searchStatusHours } = useSchool();
+
+const tomada = searchStatusHours(salon)
+// console.log('tomada: ',tomada[1])
+// console.log('tomada2: ',tomada[2]=1)
 
 // Tabs
 let tab = ref('1') //default selected
@@ -15,8 +22,10 @@ let tab = ref('1') //default selected
   <!-- <div class="text-subtitle-2 ma-1">Lista de asistencia de alumnos materia # semestre # </div> -->
   <v-card>
       <v-tabs v-model="tab" color="ssecondary" align-tabs="end" grow>
-        <v-tab :value="n" v-for="n in parseInt(veces)"> {{ n }}
-          <v-icon>mdi-timer-check-outline</v-icon>
+        <v-tab :value="n" v-for="n in parseInt(veces)">
+           {{ n }}
+          <v-icon :color="tomada[n] ? 'green': 'red'">mdi-flag</v-icon>
+          <!-- {{ tomada[n] }} -->
         </v-tab>
         <!-- <v-tab value="2">2
           <v-icon>mdi-timer-sync-outline</v-icon>

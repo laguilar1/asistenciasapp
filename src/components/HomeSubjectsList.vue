@@ -7,45 +7,8 @@ const dataStore = useDataStore()
 const { schools } = dataStore;
 console.log('Data store: ',schools)
 
-const materias = [
-  {
-    title: 'Materia 1',
-    value: 1,
-    icon: 'mdi-flag',
-  },
-  {
-    title: 'Materia 2',
-    value: 2,
-    icon: 'mdi-flag',
-  },
-  {
-    title: 'Materia 3',
-    value: 3,
-    icon: 'mdi-flag',
-  },
-]
 
-// Grado y grupo
-const grados = [
-  {
-    title: '1°A',
-    value: 1,
-    icon: 'mdi-flag',
-    finalized: true,
-  },
-  {
-    title: '1°B',
-    value: 2,
-    icon: 'mdi-flag',
-    finalized: true,
-  },
-  {
-    title: '2°A',
-    value: 3,
-    icon: 'mdi-flag',
-    finalized: false,
-  },
-]
+
 
 
 
@@ -73,9 +36,11 @@ const grados = [
 
                 <v-list-item-title v-text="salon.nombre" ></v-list-item-title>
 
+                <!-- {{ salon.tomadaLista }} -->
                 <template v-slot:append>
                   <!-- <v-btn color="green darken-3" :icon="item.finalized ? 'mdi-check' : ''" variant="text"></v-btn> -->
-                  <!-- <v-icon color="green darken-4" :icon="item.finalized ? 'mdi-check' : ''" variant="text"></v-icon> -->
+                  <v-icon :color="tomada ? 'green darken-4' : 'red'" :icon="tomada ? 'mdi-flag' : 'mdi-flag'" variant="text" v-for="tomada in salon.tomadaLista"></v-icon>
+
                 </template>
 
               </v-list-item>

@@ -47,15 +47,35 @@ const useSchool = () => {
     }, 1000);
   };
 
+
+  // const searchClassroom = (id_salon) => {
+  //   const { schools } = dataStore;
+  //   let classroom = null;
+  //   schools.forEach(school => {
+  //     school.carreras.forEach(carrera => {
+  //         carrera.materias.forEach(materia => {
+  //            materia.salones.forEach(salon => {
+  //              if (salon.idSalon === id_salon) {
+  //                console.log('salon ->', salon);
+  //                classroom = salon
+  //              }
+  //            });
+  //         });
+  //     });
+  //   });
+  //   return classroom
+  // }
+
   const searchAlumns = (id_salon) => {
     const { schools } = dataStore;
     schools.forEach(school => {
       school.carreras.forEach(carrera => {
           carrera.materias.forEach(materia => {
              materia.salones.forEach(salon => {
-               console.log(salon)
+              //  console.log(salon)
                if (salon.idSalon === id_salon) {
-                 console.log('alumnos: ',salon.alumnos)
+                 console.log('alumnos: ', salon.alumnos)
+                //  return salon.alumnos
                }
              });
           });
@@ -65,11 +85,35 @@ const useSchool = () => {
     return "Busqueda de alumnos de " + id_salon
   }
 
+  // Obtener los status de las horas del salón
+  const searchStatusHours = (id_salon) => {
+
+    const { schools } = dataStore;
+    let tomada = {};
+    let counter = 1;
+     schools.forEach(school => {
+       school.carreras.forEach(carrera => {
+           carrera.materias.forEach(materia => {
+              materia.salones.forEach(salon => {
+               if (salon.idSalon === id_salon) {
+                 salon.tomadaLista.forEach(element => {
+                   tomada[counter++] = element
+                 });
+               }
+             });
+          });
+      });
+
+    });
+    return tomada; //regresa un objeto
+  }
+
   return {
     loading,
     fetchSchool,
     errorLoading,
     searchAlumns,
+    searchStatusHours,
   }
 }
 
