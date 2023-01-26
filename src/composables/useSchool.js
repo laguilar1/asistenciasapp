@@ -1,8 +1,12 @@
 import { inject, ref } from 'vue';
 import { useDataStore } from "../store/data";
+import { useStudentStore } from "../store/student";
+import { useListStore } from "../store/list";
 
 
 const dataStore = useDataStore()
+const studentStore = useStudentStore()
+const listStore = useListStore()
 
 const useSchool = () => {
   const axios = inject('axios')  // inject axios
@@ -22,7 +26,17 @@ const useSchool = () => {
       axios.get('/profesores/asistencia/3105')
         .then((response) => {
           if (response.statusText === 'OK') {
+
             dataStore.loadSchools(response.data.datos)
+
+            // Generate students list
+            const students = studentStore.getStudents(response.data.datos)
+            studentStore.students = students
+
+            // TODO: Generate attendance list
+            listStore.getList()
+            listStore.list = {hola:'Hi'}
+
             loading.value = false;
           }
         }).catch((error) => {
@@ -33,10 +47,29 @@ const useSchool = () => {
     }, 1000);
   };
 
+  const searchAlumns = (id_salon) => {
+    const { schools } = dataStore;
+    schools.forEach(school => {
+      school.carreras.forEach(carrera => {
+          carrera.materias.forEach(materia => {
+             materia.salones.forEach(salon => {
+               console.log(salon)
+               if (salon.idSalon === id_salon) {
+                 console.log('alumnos: ',salon.alumnos)
+               }
+             });
+          });
+      });
+
+    });
+    return "Busqueda de alumnos de " + id_salon
+  }
+
   return {
     loading,
     fetchSchool,
     errorLoading,
+    searchAlumns,
   }
 }
 

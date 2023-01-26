@@ -3,7 +3,10 @@ import { ref, computed } from 'vue';
 import { useOnline } from '@vueuse/core'
 
 import useStatus from '../composables/useStatus'
+import useSchool from '../composables/useSchool'
+
 const { statusIcon, statusColor, statusText, statusNext } = useStatus();
+const { searchAlumns } = useSchool();
 
 const online = useOnline()
 const props = defineProps({
@@ -11,11 +14,37 @@ const props = defineProps({
     type: String,
     required: true
   },
+  salon: {
+    type: String,
+    required: true
+  },
 })
+const alumns = ref([]);
+const { hora, salon } = props;
+// console.log(hora)
+// console.log(salon)
+setTimeout(() => {
+  console.log(searchAlumns(salon));
 
-  const alumns = ref([
+}, 1000);
+
+// TODO: FUNCION PARA BUSCAR LOS ALUMNOS (ya)
+// TODO: 1- CREAR EL STORE alumns OBJETO DE ID ALUMNO COMO KEY Y EL VALOR COMO NOMBRE (YA)
+    // EJEMPLO    {1: NOMBRE1  2: NOMBRE2} (CLAVE ALUMNO Y NOMBRE)
+// TODO: 2- CREAR EL STORE list OBJETO A ENVIAR (AQUI SI VA A VER REDUNDANCIA)
+    // SALON_ID,  HORA Y LISTA DE ALUMNOS SIN NOMBRE PERO CON STATUS Y ID
+    // {SALON_ID : '', FECHA: '', HORAS: [{ hora='1', alumnos [{ id:'', status:''}]}]}
+// Cuando se visualice esta pagina entonces debe de agarrar los datos
+// que estén en el store list
+
+// TODO: PONER EN HOME EL ESTATUS DE PALOMITA O NO PENDIENTE
+
+
+
+
+alumns.value = [
     {
-      id:1,
+      idAlumno:1,
       status: '1',
       color: 'blue',
       icon: 'mdi-clipboard-text',
@@ -23,7 +52,7 @@ const props = defineProps({
       title: 'Nombre del Alumno 1 Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate vel ',
     },
     {
-      id:2,
+      idAlumno:2,
       status: '2',
       color: 'amber',
       icon: 'mdi-gesture-tap-button',
@@ -31,7 +60,7 @@ const props = defineProps({
       title: 'Nombre del alumno 2 Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate vel ',
     },
     {
-      id:3,
+      idAlumno:3,
       status: '3',
       color: 'amber',
       icon: 'mdi-gesture-tap-button',
@@ -39,7 +68,7 @@ const props = defineProps({
       title: 'Nombre del alumno 2 Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate vel ',
     },
     {
-      id:4,
+      idAlumno:4,
       status: 1,
       color: 'amber',
       icon: 'mdi-gesture-tap-button',
@@ -47,14 +76,14 @@ const props = defineProps({
       title: 'Nombre del alumno 2',
     },
     {
-      id:5,
+      idAlumno:5,
       status: 1,
       color: 'amber',
       icon: 'mdi-gesture-tap-button',
       subtitle: 'Jan 10, 2014',
       title: 'Nombre del alumno 2',
     },
-]);
+];
 
 
 
@@ -89,11 +118,12 @@ const isDisabledButton = computed(() => {
 </script>
 <template>
 
+  <div>HORA {{ hora }} - SALON {{ salon }}</div>
     <v-row no-gutters class="bg-blues">
       <v-col v-for="alumn in alumns" :key="alumn.title"
             cols="12" sm="6" md="4" lg="3" xl="2" >
 
-          <v-card @click="changeStatus(alumn.id,alumn.status)" class="ma-2 pa-0">
+          <v-card @click="changeStatus(alumn.idAlumno,alumn.status)" class="ma-2 pa-0">
               <v-list>
                 <v-list-item :title="alumn.title" :subtitle="statusText(alumn.status)+' Hora: '+hora" >
                   <template v-slot:prepend>

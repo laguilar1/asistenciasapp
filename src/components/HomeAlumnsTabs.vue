@@ -7,11 +7,6 @@ const route = useRoute()
 const { salon } = route.params;
 const { veces } = route.params;
 
-
-
-console.log(salon)
-console.log(veces)
-
 // Tabs
 let tab = ref('1') //default selected
 // console.log(tab.value);
@@ -35,7 +30,7 @@ let tab = ref('1') //default selected
         <v-window v-model="tab">
           <v-window-item :value="n" v-for="n in parseInt(veces)">
             <!-- Contenido de la primera hora -->
-            <HomeAlumnsTabsList :hora="n+'a'" />
+            <HomeAlumnsTabsList :hora="String(n)" :salon="salon" />
           </v-window-item>
 
         </v-window>
