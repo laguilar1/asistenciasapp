@@ -36,9 +36,16 @@ export const useListStore = defineStore('list', () => {
                });
             });
         });
-      });
-    //  console.log('Generando List',list.value)
+    });
+  }
+  const changeStatusList = (newId, idAlumno, status) => {
+    status = parseInt(status)
+    list.value[newId].forEach(element => {
+      if (element.idAlumno === idAlumno) {
+        element.asistencia = status
+      }
+    });
   }
 
-  return { list, generateList}
+  return { list, generateList, changeStatusList}
 })
