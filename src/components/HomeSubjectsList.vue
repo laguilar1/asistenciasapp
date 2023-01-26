@@ -2,13 +2,12 @@
 
 //Store
 import { useDataStore } from "../store/data";
+
 const dataStore = useDataStore()
+
 
 const { schools } = dataStore;
 console.log('Data store: ',schools)
-
-
-
 
 
 
@@ -40,6 +39,7 @@ console.log('Data store: ',schools)
                 <template v-slot:append>
                   <!-- <v-btn color="green darken-3" :icon="item.finalized ? 'mdi-check' : ''" variant="text"></v-btn> -->
                   <v-icon :color="tomada ? 'green darken-4' : 'red'" :icon="tomada ? 'mdi-flag' : 'mdi-flag'" variant="text" v-for="tomada in salon.tomadaLista"></v-icon>
+
 
                 </template>
 

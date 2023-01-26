@@ -33,9 +33,9 @@ const useSchool = () => {
             const students = studentStore.getStudents(response.data.datos)
             studentStore.students = students
 
-            // TODO: Generate attendance list
-            listStore.getList()
-            listStore.list = {hola:'Hi'}
+            // Generate attendance list
+            listStore.generateList(response.data.datos)
+
 
             loading.value = false;
           }
@@ -44,46 +44,9 @@ const useSchool = () => {
           loading.value = false;
           errorLoading.value = true;
         });
-    }, 1000);
+    }, 800);
   };
 
-
-  // const searchClassroom = (id_salon) => {
-  //   const { schools } = dataStore;
-  //   let classroom = null;
-  //   schools.forEach(school => {
-  //     school.carreras.forEach(carrera => {
-  //         carrera.materias.forEach(materia => {
-  //            materia.salones.forEach(salon => {
-  //              if (salon.idSalon === id_salon) {
-  //                console.log('salon ->', salon);
-  //                classroom = salon
-  //              }
-  //            });
-  //         });
-  //     });
-  //   });
-  //   return classroom
-  // }
-
-  const searchAlumns = (id_salon) => {
-    const { schools } = dataStore;
-    schools.forEach(school => {
-      school.carreras.forEach(carrera => {
-          carrera.materias.forEach(materia => {
-             materia.salones.forEach(salon => {
-              //  console.log(salon)
-               if (salon.idSalon === id_salon) {
-                 console.log('alumnos: ', salon.alumnos)
-                //  return salon.alumnos
-               }
-             });
-          });
-      });
-
-    });
-    return "Busqueda de alumnos de " + id_salon
-  }
 
   // Obtener los status de las horas del salón
   const searchStatusHours = (id_salon) => {
@@ -112,7 +75,6 @@ const useSchool = () => {
     loading,
     fetchSchool,
     errorLoading,
-    searchAlumns,
     searchStatusHours,
   }
 }
