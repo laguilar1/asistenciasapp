@@ -2,11 +2,13 @@ import { inject, ref } from 'vue';
 import { useDataStore } from "../store/data";
 import { useStudentStore } from "../store/student";
 import { useListStore } from "../store/list";
+import { useRoomStore } from "../store/room";
 
 
 const dataStore = useDataStore()
 const studentStore = useStudentStore()
 const listStore = useListStore()
+const roomStore = useRoomStore()
 
 const useSchool = () => {
   const axios = inject('axios')  // inject axios
@@ -35,6 +37,9 @@ const useSchool = () => {
 
             // Generate attendance list
             listStore.generateList(response.data.datos)
+
+            // Generate rooms
+            roomStore.generateRoom(response.data.datos)
 
 
             loading.value = false;
