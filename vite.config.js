@@ -30,6 +30,8 @@ export default ({ mode }) => {
 
         // Cuando injectamos un service worker manual
         // https://vite-pwa-org.netlify.app/guide/inject-manifest.html
+        // strategies: "injectManifest",//para agregar nuestro sw en public/sw
+        // strategies: undefined,//para agregar nuestro propio codigo
         registerType: 'autoUpdate',
         devOptions: {
           enabled: true
@@ -38,7 +40,11 @@ export default ({ mode }) => {
         // injectRegister: null,
         injectRegister: 'auto',
         workbox: {
-          globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
+          // TODO: Falta meter a caché:
+          // assets/materialdesignicons-webfont.bd725a7a.ttf?v=7.0.96
+          // assets/materialdesignicons-webfont.e52d60f6.woff2?v=7.0.9
+          globPatterns: ["**/*","**\/assets\/*","**\/*.{js,css,html,ico,png,svg,woff2,ttf}"],
+          // globPatterns: ['**/*','**/*.{js,css,html,ico,png,svg,woff2,ttf}'],
           // globPatterns:  ["**\/*.{js,css,html}"],
           globFollow: true, //default -
           globIgnores: ["**\/node_modules\/**\/*"], //default  -carpeta ignorada
@@ -50,10 +56,26 @@ export default ({ mode }) => {
             {
               // urlPattern: ['**/*.{js,css,html,ico,png,svg}'],
               // urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
-              urlPattern: /^https:\/\/cenedic4.ucol.mx\/newasistencias\/index.php\/profesores\/plantel\/.*/i,
+              urlPattern: /^https:\/\/cenedic4.ucol.mx\/newasistencias\/index.php\/profesores\/asistencia\/.*/i,
               handler: 'CacheFirst',
+              // handler: 'CacheOnly',
               options: {
                 cacheName: 'local-api-cache',
+                expiration: {
+                  maxEntries: 10,
+                  maxAgeSeconds: 60 * 60 * 24 * 365 // <== 365 days
+                },
+                cacheableResponse: {
+                  statuses: [0, 200]
+                }
+              }
+            },
+            {
+              // urlPattern: /^https:\/\/localhost\/pwasistencias\/home\/*/i,
+              urlPattern: /^https:\/\/cenedic4.ucol.mx\/pwasistencias\/.*/i,
+              handler: 'CacheFirst',
+              options: {
+                cacheName: 'local-cache',
                 expiration: {
                   maxEntries: 10,
                   maxAgeSeconds: 60 * 60 * 24 * 365 // <== 365 days

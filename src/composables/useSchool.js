@@ -5,6 +5,9 @@ import { useListStore } from "../store/list";
 import { useRoomStore } from "../store/room";
 
 
+import localforage from "localforage";
+
+
 const dataStore = useDataStore()
 const studentStore = useStudentStore()
 const listStore = useListStore()
@@ -18,12 +21,48 @@ const useSchool = () => {
 
   // console.log('url back: ',import.meta.env.VITE_URL_BACK);
 
+  const removeItems = async () => {
+    try {
+      await localforage.removeItem('data');
+      await localforage.removeItem('list');
+      await localforage.removeItem('room');
+      await localforage.removeItem('student');
+      getMainData()
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   const fetchSchool = () => {
 
     loading.value = true;
     errorLoading.value = false;
 
+    // MODO 1  - Aqui disminuye el aumento de indexDB
+    // Eliminar todas las keys y como la petición
+    // Esta con caché entonces restaura todo sin hacer peticion extra
+    removeItems().then(function() {
+      console.log('All keys was deleted!');
+    }).catch(function (err) { console.log(err); });
+
+
+    // MODO 2 - Aqui si hay aumento del indexDB
+    // localforage.getItem('data')
+    //     .then((data) => {
+    //       // Si existe indexDB no hace petición
+    //       if (!data) {
+    //         getMainData()
+    //       } else {
+    //         console.log('Datos restaurados desde local: ');
+    //         loading.value = false;
+    //       }
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+  };
+
+  const getMainData = () => {
     setTimeout(() => {
       axios.get('/profesores/asistencia/3105')
         .then((response) => {
@@ -41,7 +80,6 @@ const useSchool = () => {
             // Generate rooms
             roomStore.generateRoom(response.data.datos)
 
-
             loading.value = false;
           }
         }).catch((error) => {
@@ -49,9 +87,8 @@ const useSchool = () => {
           loading.value = false;
           errorLoading.value = true;
         });
-    }, 800);
-  };
-
+    }, 1000);
+  }
 
   // Obtener los status de las horas del salón
   const searchStatusHours = (id_salon) => {
