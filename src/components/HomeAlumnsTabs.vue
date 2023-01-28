@@ -15,9 +15,26 @@ const { searchStatusHours } = useSchool();
 const roomStore = useRoomStore()
 
 const tomada = searchStatusHours(salon)
+const flags = ref(false)
 // console.log('tomada: ',tomada[1])
 // console.log('tomada2: ',tomada[2]=1)
 // console.log('--> ', salon);
+
+
+// const getStatusNow = (salon, n) => {
+//   return roomStore.getStatus(salon, n)
+//   setTimeout(() => {
+//   }, 100);
+// }
+
+// Esto es para que se tarde en mostrar las banderas
+// Porque si se ejecuta en seguida al recargar la pagina
+// da error de reactividad porque es asincrono el store room
+setTimeout(() => {
+  flags.value = true
+}, 500);
+
+
 
 // Tabs
 let tab = ref('1') //default selected
@@ -30,7 +47,10 @@ let tab = ref('1') //default selected
         <v-tab :value="n" v-for="n in parseInt(veces)">
            {{ n }}
            <!-- - {{ roomStore.room[salon+'-'+n].status }} -->
-          <v-icon :color="roomStore.room[salon+'-'+n].status ? 'green': 'red'">mdi-flag</v-icon>
+           <!-- {{ roomStore.getStatus(salon, n) }} -->
+           <!-- {{ getStatusNow(salon, n) }} -->
+           <!-- {{ getStatusNow(salon, n) }} -->
+          <v-icon :color="roomStore.getStatus(salon, n) ? 'green': 'red'" v-if="flags">mdi-flag</v-icon>
           <!-- {{ tomada[n] }} -->
         </v-tab>
         <!-- <v-tab value="2">2

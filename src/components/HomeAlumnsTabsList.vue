@@ -67,7 +67,7 @@ const isDisabledButton = computed(() => {
 </script>
 <template>
 
-  <div>HORA {{ hora }} - Newid {{ newId }}</div>
+  <!-- <div>HORA {{ hora }} - Newid {{ newId }}</div> -->
     <v-row no-gutters class="bg-blues">
       <v-col v-for="alumn,i in listStore.list[newId]" :key="alumn.idAlumno"
             cols="12" sm="6" md="4" lg="3" xl="2" >

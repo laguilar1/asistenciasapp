@@ -54,6 +54,7 @@ const useSchool = () => {
             getMainData()
           } else {
             console.log('Datos restaurados desde local: ');
+            //Redireccionar a home
             loading.value = false;
           }
       })

@@ -10,7 +10,23 @@ const roomStore = useRoomStore()
 const { schools } = dataStore;
 console.log('Data store: ',schools)
 
+// const getStatus =  (idSalon, hora) => {
+//   try {
+//     return roomStore.room[idSalon + '-' + (hora)].status
+//   } catch(err) {
+//     console.log(err)
+//   }
+// }
 
+// const getStudents = (idSalon) => {
+//   try {
+//     // return roomStore.room[idSalon + '-' + (hora)].status
+//     return roomStore.room[idSalon + '-1'].students
+
+//   } catch(err) {
+//     console.log(err)
+//   }
+// }
 
 </script>
 <template>
@@ -29,24 +45,26 @@ console.log('Data store: ',schools)
             <v-expansion-panel-text>
 
               <v-list-item v-for="salon, i in materia.salones" :key="i" :value="salon.nombre" active-color="primary" :to='"/alumns/"+salon.idSalon+"/"+salon.vecesLista'
-              :disabled="roomStore.room[salon.idSalon + '-1'].students  ? false : true">
+              :disabled="roomStore.getStudents(salon.idSalon)  ? false : true">
                 <!-- :class="item.finalized ?'bg-green-lighten-5' : ''" -->
                 <!-- <template v-slot:prepend>
                   <v-icon :icon="item.icon"></v-icon>
                 </template> -->
 
                 <v-list-item-title
-                v-text="salon.nombre+' ('+roomStore.room[salon.idSalon + '-1'].students+')'"></v-list-item-title>
+                v-text="salon.nombre+' ('+roomStore.getStudents(salon.idSalon)+')'"></v-list-item-title>
 
                 <!-- {{ salon.tomadaLista }} -->
                 <template v-slot:append>
                   <!-- <v-btn color="green darken-3" :icon="item.finalized ? 'mdi-check' : ''" variant="text"></v-btn> -->
-                    <!-- <div v-for="n in salon.vecesLista">
-                        {{ salon.idSalon + '-' + (n) }} ***
-                        {{ roomStore.room[salon.idSalon + '-' + (n)].status }} ***
-                    </div> -->
+                    <div v-for="n in salon.vecesLista">
+                        <!-- {{ salon.idSalon + '-' + (n) }} *** -->
+                        <!-- {{ roomStore.room[salon.idSalon + '-' + (n)].status }} *** -->
+                        <!-- {{ roomStore.getStatus(salon.idSalon,n) }} *** -->
+                        <!-- {{ roomStore.getStudents(salon.idSalon) }} *** -->
+                    </div>
 
-                    <v-icon :color="roomStore.room[salon.idSalon + '-' + (n)].status ? 'green darken-4' : 'red'" :icon="roomStore.room[salon.idSalon + '-' + (n)].status ? 'mdi-flag' : 'mdi-flag'" variant="text" v-for="n in salon.vecesLista"></v-icon>
+                    <v-icon :color="roomStore.getStatus(salon.idSalon,n) ? 'green darken-4' : 'red'" :icon="roomStore.getStatus(salon.idSalon,n) ? 'mdi-flag' : 'mdi-flag'" variant="text" v-for="n in salon.vecesLista"></v-icon>
                     <!-- <v-icon :color="tomada ? 'green darken-4' : 'red'" :icon="tomada ? 'mdi-flag' : 'mdi-flag'" variant="text" v-for="n in salon.vecesLista">{{ i }}</v-icon> -->
 
 
