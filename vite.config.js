@@ -43,7 +43,8 @@ export default ({ mode }) => {
           // TODO: Falta meter a caché:
           // assets/materialdesignicons-webfont.bd725a7a.woff2?v=7.0.96
           // assets/materialdesignicons-webfont.e52d60f6.woff2?v=7.0.9
-          globPatterns: ["**\/*", "**\/assets\/*", "**\/*.{js,css,html,ico,png,jpg,jpeg,svg,woff,eot,ttf,woff2}"],
+          globPatterns: ["**\/*", "**\/*.{js,css,html,ico,png,jpg,jpeg,svg,woff,eot,ttf,woff2}"],
+          // globPatterns: ["**\/*", "**\/assets\/*", "**\/*.{js,css,html,ico,png,jpg,jpeg,svg,woff,eot,ttf,woff2}"],
           // globPatterns: ['**/*','**/*.{js,css,html,ico,png,svg,woff2,ttf}'],
           // globPatterns:  ["**\/*.{js,css,html}"],
           globFollow: true, //default -

@@ -15,5 +15,45 @@ export const useDataStore = defineStore('data', () => {
         schools.value = [];
     }
 
-  return { schools, cleanSchoools, loadSchools }
+  // Cambia el estado del arbol original
+  // El otro arbol de reactividad está en room
+  // store.data y store.room (dependen)
+  const changeStatusTakeList = (id_salon, hora, status=1) => {
+
+    status = parseInt(status)
+
+    const idArray = id_salon.split('-')
+    const [cvePlantel, cvePlanEstudio, IdCurricula] = idArray
+
+    schools.value.forEach(plantel => {
+      if (plantel.cvePlantel === cvePlantel) {
+
+        // console.log(plantel)
+        plantel.carreras.forEach(carrera => {
+          if (carrera.cvePlanEstudio === cvePlanEstudio) {
+
+            carrera.materias.forEach(materia => {
+              if (materia.IdCurricula === IdCurricula) {
+
+                materia.salones.forEach(salon => {
+                  if (salon.idSalon === id_salon) {
+
+                    salon.tomadaLista[hora] = status
+
+                  }
+                });
+
+              }
+
+            });
+          }
+        });
+
+      }
+    });
+
+  }
+
+
+  return { schools, cleanSchoools, loadSchools, changeStatusTakeList }
 })

@@ -6,6 +6,8 @@ import useStatus from '../composables/useStatus'
 
 import { useListStore } from "../store/list";
 import { useStudentStore } from "../store/student";
+import { useRoomStore } from "../store/room";
+import { useDataStore } from "../store/data";
 
 
 const { statusIcon, statusColor, statusText, statusNext } = useStatus();
@@ -13,6 +15,8 @@ const { statusIcon, statusColor, statusText, statusNext } = useStatus();
 const online = useOnline()
 const listStore = useListStore()
 const studentStore = useStudentStore()
+const roomStore = useRoomStore()
+const dataStore = useDataStore()
 
 
 const props = defineProps({
@@ -28,6 +32,9 @@ const props = defineProps({
 const { hora, salon } = props;
 const newId = salon + '-' + hora;
 
+const snackbar = ref(false)
+const text = `Actualizado correctamente`
+const timeout = 2000
 // console.log(hora)
 // console.log(salon)
 // setTimeout(() => {
@@ -37,7 +44,8 @@ const newId = salon + '-' + hora;
 
 // console.log(listStore.lis[newId])
 
-const changeStatus = (newId, idAlumno, status) => {
+
+const changeStatusCards = (newId, idAlumno, status) => {
 
   const newStatus = statusNext(status)
   listStore.changeStatusList(newId, idAlumno, newStatus)
@@ -45,9 +53,8 @@ const changeStatus = (newId, idAlumno, status) => {
 }
 
 const esEnviado = (newId, idAlumno) => {
-
   const result = listStore.getSendStatus(newId, idAlumno)
-  console.log(result)
+  // console.log(result)
   return result
   // return false
 }
@@ -55,7 +62,26 @@ const esEnviado = (newId, idAlumno) => {
 // Example send button
 const loading = ref(false);
 
-const load = () => {
+const changeStatusToSend = (id_salon, hora) => {
+  const newId = salon + '-' + hora;
+  const status = 1
+
+  // Change status
+  roomStore.changeStatusRoom(newId, status)
+  dataStore.changeStatusTakeList(id_salon, hora, status)
+
+  // Funcion hacer barrido de enviado listStore
+
+
+  // console.log('change to send', id_salon, hora)
+
+}
+const load = (salon, hora) => {
+
+  // Change status
+  changeStatusToSend(salon, hora);
+
+
   snackbar.value = true
   loading.value = true
   setTimeout(() => (loading.value = false), 3000)
@@ -70,29 +96,28 @@ const isDisabledButton = computed(() => {
   // return false;
 })
 
-const snackbar = ref(false)
-const text =  `Hello, I'm a snackbar`
 
 
+// 2 Funciones actualizar estado de salones.tomadaLista (store.data)
+    //nota: se cambia store.data y store.room (para tener congruencia)
 
-// TODO: PONER EN STORE LIST UN CAMPO, ENVIADO EL CUAL SERÁ 0 O 1
-// CUANDO SE RECARGUE POR PRIMERA VEZ, TENDRA LA CONDICION DE
-// SI EL FORMULARIO YA SE ENVIÓ, Y SI ASISTENCIA ES UNO
-// ENTONCES EL CAPO ENVIADO ES 1, SI NO ES 0
+// Funcion para actualizar estado de list.objeto.enviado (store.list)
+      // Se hará un barrido y quien tenga asistencia 1
+      // se cambiará su enviado a true
 
-// CADA QUE SE ENVÍ EL EL FORMULARIO CORRECTAMENTE SE VA A ACTUALIZAR
-// EL STORE, NUEVAMENTE TODO , SE HARÁ EL BARRIDO DE NUEVO
-
-// ASÍ SE TOMARÁ ENCUENTA SOLO LOS QUE ENVIADO SEAN 0 PARA SER MOSTRADOS
+// Funcion watcher estárá observando un arbol en  store.list
+  // Si vee que todos los alumnos tienen eviado es true
+  // Deshabilita el boton de Guardar asistencia
+  // Se le va a poner una leyenda
 </script>
 <template>
 
-  <!-- <div>HORA {{ hora }} - Newid {{ newId }}</div> -->
+  <div>HORA {{ hora }} - salon {{ salon }}</div>
     <v-row no-gutters class="bg-blues">
       <v-col v-for="alumn,i in listStore.list[newId]" :key="alumn.idAlumno"
             cols="12" sm="6" md="4" lg="3" xl="2" >
 
-          <v-card @click="changeStatus(newId, alumn.idAlumno,alumn.asistencia)" class="ma-2 pa-0" :disabled="esEnviado(newId, alumn.idAlumno)">
+          <v-card @click="changeStatusCards(newId, alumn.idAlumno,alumn.asistencia)" class="ma-2 pa-0" :disabled="esEnviado(newId, alumn.idAlumno)">
               <v-list>
                 <v-list-item :title="(i+1)+'-'+studentStore.students[alumn.idAlumno]"
                 >
@@ -128,14 +153,16 @@ const text =  `Hello, I'm a snackbar`
           :loading="loading"
           :disabled="isDisabledButton"
           color="primary"
-          @click="load()"
+          @click="load(salon, hora)"
           size="large" rounded="pill">
            {{ online? 'Guardar asistencias':'Sin conexión' }}
         </v-btn>
 
 
 
-        <v-snackbar v-model="snackbar">
+        <v-snackbar v-model="snackbar" rounded="pill"
+        :timeout="timeout" location="bottom right">
+          <v-icon color="green">mdi-check-circle</v-icon>
           {{ text }}
           <template v-slot:actions>
             <v-btn color="pink" variant="text" @click="snackbar = false">
