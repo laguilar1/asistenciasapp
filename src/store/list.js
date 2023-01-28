@@ -11,7 +11,7 @@ export const useListStore = defineStore('list', () => {
         school.carreras.forEach(carrera => {
             carrera.materias.forEach(materia => {
                materia.salones.forEach(salon => {
-                 const { vecesLista, idSalon, alumnos } = salon
+                 const { vecesLista, idSalon, alumnos, tomadaLista } = salon
                 //  console.log('salon ->', idSalon);
                 //  console.log('veces ->', vecesLista);
                  for (let i = 0; i < vecesLista; i++) {
@@ -27,6 +27,7 @@ export const useListStore = defineStore('list', () => {
                          'idAlumno': idAlumno,
                          'noCta': noCta,
                          'asistencia': asistencia[num - 1],
+                         'enviado': (tomadaLista[num - 1] && asistencia[num - 1]) ? true : false,
                        }
                      );
                    });
@@ -47,5 +48,15 @@ export const useListStore = defineStore('list', () => {
     });
   }
 
-  return { list, generateList, changeStatusList}
+  const getSendStatus = (newId, idAlumno) => {
+    let send = false
+    list.value[newId].forEach(element => {
+      if (element.idAlumno === idAlumno) {
+        send = element.enviado ? true : false
+      }
+    });
+    return send
+  }
+
+  return { list, generateList, changeStatusList, getSendStatus}
 })

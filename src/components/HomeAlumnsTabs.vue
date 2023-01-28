@@ -50,7 +50,13 @@ let tab = ref('1') //default selected
            <!-- {{ roomStore.getStatus(salon, n) }} -->
            <!-- {{ getStatusNow(salon, n) }} -->
            <!-- {{ getStatusNow(salon, n) }} -->
-          <v-icon :color="roomStore.getStatus(salon, n) ? 'green': 'red'" v-if="flags">mdi-flag</v-icon>
+
+          <v-icon :color="roomStore.getStatus(salon, n) ? 'green darken-4': 'red'" v-if="flags">mdi-flag</v-icon>
+
+
+
+
+
           <!-- {{ tomada[n] }} -->
         </v-tab>
         <!-- <v-tab value="2">2
