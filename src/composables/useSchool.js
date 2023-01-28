@@ -21,17 +21,17 @@ const useSchool = () => {
 
   // console.log('url back: ',import.meta.env.VITE_URL_BACK);
 
-  const removeItems = async () => {
-    try {
-      await localforage.removeItem('data');
-      await localforage.removeItem('list');
-      await localforage.removeItem('room');
-      await localforage.removeItem('student');
-      getMainData()
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  // const removeItems = async () => {
+  //   try {
+  //     await localforage.removeItem('data');
+  //     await localforage.removeItem('list');
+  //     await localforage.removeItem('room');
+  //     await localforage.removeItem('student');
+  //     getMainData()
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
 
   const fetchSchool = () => {
 
@@ -41,25 +41,25 @@ const useSchool = () => {
     // MODO 1  - Aqui disminuye el aumento de indexDB
     // Eliminar todas las keys y como la petición
     // Esta con caché entonces restaura todo sin hacer peticion extra
-    removeItems().then(function() {
-      console.log('All keys was deleted!');
-    }).catch(function (err) { console.log(err); });
+    // removeItems().then(function() {
+    //   console.log('All keys was deleted!');
+    // }).catch(function (err) { console.log(err); });
 
 
     // MODO 2 - Aqui si hay aumento del indexDB
-    // localforage.getItem('data')
-    //     .then((data) => {
-    //       // Si existe indexDB no hace petición
-    //       if (!data) {
-    //         getMainData()
-    //       } else {
-    //         console.log('Datos restaurados desde local: ');
-    //         loading.value = false;
-    //       }
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    localforage.getItem('data')
+        .then((data) => {
+          // Si existe indexDB no hace petición
+          if (!data) {
+            getMainData()
+          } else {
+            console.log('Datos restaurados desde local: ');
+            loading.value = false;
+          }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const getMainData = () => {

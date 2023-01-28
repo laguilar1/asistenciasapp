@@ -3,6 +3,8 @@ import { ref } from 'vue';
 import { useRoute } from 'vue-router'
 import HomeAlumnsTabsList from '@/components/HomeAlumnsTabsList.vue'
 
+import { useRoomStore } from "../store/room";
+
 import useSchool from '../composables/useSchool'
 
 const route = useRoute()
@@ -10,9 +12,12 @@ const { salon } = route.params;
 const { veces } = route.params;
 const { searchStatusHours } = useSchool();
 
+const roomStore = useRoomStore()
+
 const tomada = searchStatusHours(salon)
 // console.log('tomada: ',tomada[1])
 // console.log('tomada2: ',tomada[2]=1)
+// console.log('--> ', salon);
 
 // Tabs
 let tab = ref('1') //default selected
@@ -24,7 +29,8 @@ let tab = ref('1') //default selected
       <v-tabs v-model="tab" color="ssecondary" align-tabs="end" grow>
         <v-tab :value="n" v-for="n in parseInt(veces)">
            {{ n }}
-          <v-icon :color="tomada[n] ? 'green': 'red'">mdi-flag</v-icon>
+           <!-- - {{ roomStore.room[salon+'-'+n].status }} -->
+          <v-icon :color="roomStore.room[salon+'-'+n].status ? 'green': 'red'">mdi-flag</v-icon>
           <!-- {{ tomada[n] }} -->
         </v-tab>
         <!-- <v-tab value="2">2

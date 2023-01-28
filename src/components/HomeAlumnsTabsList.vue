@@ -7,11 +7,13 @@ import useStatus from '../composables/useStatus'
 import { useListStore } from "../store/list";
 import { useStudentStore } from "../store/student";
 
+
 const { statusIcon, statusColor, statusText, statusNext } = useStatus();
 
 const online = useOnline()
 const listStore = useListStore()
 const studentStore = useStudentStore()
+
 
 const props = defineProps({
   hora: {
@@ -25,12 +27,11 @@ const props = defineProps({
 })
 const { hora, salon } = props;
 const newId = salon + '-' + hora;
+
 // console.log(hora)
 // console.log(salon)
 // setTimeout(() => {
-//   const alumnos = searchAlumns(salon);
-//   console.log('aal ', alumnos);
-
+//
 // }, 1000);
 
 
@@ -68,12 +69,12 @@ const isDisabledButton = computed(() => {
 
   <div>HORA {{ hora }} - Newid {{ newId }}</div>
     <v-row no-gutters class="bg-blues">
-      <v-col v-for="alumn in listStore.list[newId]" :key="alumn.idAlumno"
+      <v-col v-for="alumn,i in listStore.list[newId]" :key="alumn.idAlumno"
             cols="12" sm="6" md="4" lg="3" xl="2" >
 
           <v-card @click="changeStatus(newId, alumn.idAlumno,alumn.asistencia)" class="ma-2 pa-0">
               <v-list>
-                <v-list-item :title="studentStore.students[alumn.idAlumno]" :subtitle="statusText(alumn.asistencia) + ' Hora: ' + hora + ' Status: ' + alumn.asistencia" >
+                <v-list-item :title="(i+1)+'-'+studentStore.students[alumn.idAlumno]" :subtitle="statusText(alumn.asistencia) + ' Hora: ' + hora + ' Status: ' + alumn.asistencia" >
                   <template v-slot:prepend>
                     <!-- <v-avatar :color="statusColor(alumn.asistencia)">
                       <v-icon :icon="statusIcon(alumn.asistencia)" color="white"></v-icon>
