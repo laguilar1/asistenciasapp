@@ -72,5 +72,16 @@ export const useListStore = defineStore('list', () => {
 
   }
 
-  return { list, generateList, changeStatusList, getSendStatus, changeStatusToSend}
+  const isCompletelist = (newId) => {
+    let status = true
+    console.log('know if isCompleteList ', newId)
+    list.value[newId].forEach(student => {
+      if (!student.enviado) {
+        status = false
+      }
+    });
+    return status
+  }
+
+  return { list, generateList, changeStatusList, getSendStatus, changeStatusToSend, isCompletelist}
 })

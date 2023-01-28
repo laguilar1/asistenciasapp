@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { useOnline } from '@vueuse/core'
-
+import EmptyComponent from '@/components/EmptyComponent.vue'
 import useStatus from '../composables/useStatus'
 
 import { useListStore } from "../store/list";
@@ -35,6 +35,11 @@ const newId = salon + '-' + hora;
 const snackbar = ref(false)
 const text = `Actualizado correctamente`
 const timeout = 2000
+
+// Example send button
+const loading = ref(false);
+const isComplete = ref(false)
+// const loadingBody = ref(true)
 // console.log(hora)
 // console.log(salon)
 // setTimeout(() => {
@@ -59,32 +64,43 @@ const esEnviado = (newId, idAlumno) => {
   // return false
 }
 
-// Example send button
-const loading = ref(false);
+
+// verify if list is complete
+setTimeout(() => {
+  isComplete.value = listStore.isCompletelist(newId);
+  // console.log(listStore.isCompletelist(newId), '<--')
+}, 200);
+
+
+
 
 const changeStatusToSend = (id_salon, hora) => {
   const newId = salon + '-' + hora;
-  const status = 1
+  const statusRoom = 1
 
   // Change status
-  roomStore.changeStatusRoom(newId, status)
-  dataStore.changeStatusTakeList(id_salon, hora, status)
-
+  roomStore.changeStatusRoom(newId, statusRoom)
+  dataStore.changeStatusTakeList(id_salon, hora, statusRoom)
   // Funcion hacer barrido de enviado listStore
-  listStore.changeStatusToSend(newId, status)
+  listStore.changeStatusToSend(newId, statusRoom)
 
+  // Funcion para saber si ya está completado
+  isComplete.value = listStore.isCompletelist(newId);
   // console.log('change to send', id_salon, hora)
+
+  // TODO: LUNES HACER LLAMADA A LA API PARA GUARDAR DATOS
+  // TODO:
 
 }
 const load = (salon, hora) => {
 
-  // Change status
-  changeStatusToSend(salon, hora);
-
-
-  snackbar.value = true
   loading.value = true
-  setTimeout(() => (loading.value = false), 3000)
+  setTimeout(() => {
+    // Change status
+    changeStatusToSend(salon, hora);
+    loading.value = false
+    snackbar.value = true
+  }, 3000)
 }
 
 const isDisabledButton = computed(() => {
@@ -98,12 +114,7 @@ const isDisabledButton = computed(() => {
 
 
 
-// 2 Funciones actualizar estado de salones.tomadaLista (store.data)
-    //nota: se cambia store.data y store.room (para tener congruencia)
 
-// Funcion para actualizar estado de list.objeto.enviado (store.list)
-      // Se hará un barrido y quien tenga asistencia 1
-      // se cambiará su enviado a true
 
 // Funcion watcher estárá observando un arbol en  store.list
   // Si vee que todos los alumnos tienen eviado es true
@@ -112,12 +123,28 @@ const isDisabledButton = computed(() => {
 </script>
 <template>
 
-  <div>HORA {{ hora }} - salon {{ salon }}</div>
-    <v-row no-gutters class="bg-blues">
+  <!-- <div>HORA {{ hora }} - salon {{ salon }}</div> -->
+
+    <EmptyComponent v-if="isComplete"></EmptyComponent>
+
+    <v-snackbar v-model="snackbar" rounded="pill" :timeout="timeout" location="bottom right">
+      <v-icon color="green">mdi-check-circle</v-icon>
+      {{ text }}
+      <template v-slot:actions>
+        <v-btn color="pink" variant="text" @click="snackbar = false">
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
+
+    <v-row no-gutters class="bg-blues" v-if="!isComplete">
       <v-col v-for="alumn,i in listStore.list[newId]" :key="alumn.idAlumno"
             cols="12" sm="6" md="4" lg="3" xl="2" >
 
-          <v-card @click="changeStatusCards(newId, alumn.idAlumno,alumn.asistencia)" class="ma-2 pa-0" :disabled="esEnviado(newId, alumn.idAlumno)">
+          <v-card @click="changeStatusCards(newId, alumn.idAlumno,alumn.asistencia)" class="ma-2 pa-0"
+          :disabled="esEnviado(newId, alumn.idAlumno)"
+          v-if="!esEnviado(newId, alumn.idAlumno)"
+          >
               <v-list>
                 <v-list-item :title="(i+1)+'-'+studentStore.students[alumn.idAlumno]"
                 >
@@ -147,7 +174,8 @@ const isDisabledButton = computed(() => {
       </v-col>
 
       <!-- TODO: El botón solo estára disponible si tiene conexión a internet, deshabilitar botón y poner icono de carita triste  mdi-emoticon-sad-outlin -->
-      <v-col col="12" sm="12" class="d-flex justify-space-around align-center ma-2 pa-2">
+      <v-col col="12" sm="12" class="d-flex justify-space-around align-center ma-2 pa-2"
+      v-if="!isComplete">
         <v-btn
           prepend-icon="mdi-check"
           :loading="loading"
@@ -158,21 +186,7 @@ const isDisabledButton = computed(() => {
            {{ online? 'Guardar asistencias':'Sin conexión' }}
         </v-btn>
 
-
-
-        <v-snackbar v-model="snackbar" rounded="pill"
-        :timeout="timeout" location="bottom right">
-          <v-icon color="green">mdi-check-circle</v-icon>
-          {{ text }}
-          <template v-slot:actions>
-            <v-btn color="pink" variant="text" @click="snackbar = false">
-              Close
-            </v-btn>
-          </template>
-        </v-snackbar>
       </v-col>
-
-
     </v-row>
 
 </template>
