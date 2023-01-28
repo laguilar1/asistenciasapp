@@ -4,7 +4,7 @@ const useStatus = () => {
   const statusText = (status) => {
     status = status.toString()
 
-    if (status === '1') { return 'Asistencia' }
+    if (status === '1') { return 'Presente' }
     else if (status === '2') { return 'Retardo' }
     else if (status === '3') { return 'Falta' }
     return 'Justificado';

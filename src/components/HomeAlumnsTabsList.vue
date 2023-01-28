@@ -71,7 +71,7 @@ const changeStatusToSend = (id_salon, hora) => {
   dataStore.changeStatusTakeList(id_salon, hora, status)
 
   // Funcion hacer barrido de enviado listStore
-
+  listStore.changeStatusToSend(newId, status)
 
   // console.log('change to send', id_salon, hora)
 

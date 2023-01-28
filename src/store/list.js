@@ -58,5 +58,19 @@ export const useListStore = defineStore('list', () => {
     return send
   }
 
-  return { list, generateList, changeStatusList, getSendStatus}
+  const changeStatusToSend = (newId, statusRoom) =>{
+    statusRoom = parseInt(statusRoom)
+    list.value[newId].forEach(student => {
+      // Es enviado (true)
+      // Si el estado clase es 1(enviado) y asistencia es 1(presente)
+      let status = (statusRoom && student.asistencia === 1)
+                    ? true
+                    : false
+      student.enviado = status
+
+    });
+
+  }
+
+  return { list, generateList, changeStatusList, getSendStatus, changeStatusToSend}
 })
