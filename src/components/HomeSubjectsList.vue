@@ -51,8 +51,9 @@ console.log('Data store: ',schools)
                   <v-icon :icon="item.icon"></v-icon>
                 </template> -->
 
-                <v-list-item-title
-                v-text="salon.nombre+' ('+roomStore.getStudents(salon.idSalon)+')'"></v-list-item-title>
+                <v-list-item-title>
+                  {{ salon.nombre + ' (' + roomStore.getStudents(salon.idSalon) + ')'}}
+                </v-list-item-title>
 
                 <!-- {{ salon.tomadaLista }} -->
                 <template v-slot:append>
@@ -64,10 +65,12 @@ console.log('Data store: ',schools)
                         <!-- {{ roomStore.getStudents(salon.idSalon) }} *** -->
                     </div>
 
-                    <v-icon :color="roomStore.getStatus(salon.idSalon,n) ? 'green darken-4' : 'red'" :icon="roomStore.getStatus(salon.idSalon,n) ? 'mdi-flag' : 'mdi-flag'" variant="text" v-for="n in salon.vecesLista"></v-icon>
+                    <v-icon :color="roomStore.getStatus(salon.idSalon,n) ? 'green darken-4' : 'grey'" :icon="roomStore.getStatus(salon.idSalon,n) ? 'mdi-check' : 'mdi-check'" variant="text" v-for="n in salon.vecesLista"></v-icon>
+                    <!-- <v-badge disabled @click.stop
+                    :color="roomStore.getStudents(salon.idSalon) ? 'info' : 'grey'"
+                    :content="roomStore.getStudents(salon.idSalon)" inline>
+                    </v-badge> -->
                     <!-- <v-icon :color="tomada ? 'green darken-4' : 'red'" :icon="tomada ? 'mdi-flag' : 'mdi-flag'" variant="text" v-for="n in salon.vecesLista">{{ i }}</v-icon> -->
-
-
 
                 </template>
 

@@ -38,7 +38,7 @@ const timeout = 2000
 
 // Example send button
 const loading = ref(false);
-const isComplete = ref(false)
+const isComplete = ref(true)
 // const loadingBody = ref(true)
 // console.log(hora)
 // console.log(salon)
@@ -69,7 +69,7 @@ const esEnviado = (newId, idAlumno) => {
 setTimeout(() => {
   isComplete.value = listStore.isCompletelist(newId);
   // console.log(listStore.isCompletelist(newId), '<--')
-}, 200);
+}, 150);
 
 
 
@@ -100,7 +100,7 @@ const load = (salon, hora) => {
     changeStatusToSend(salon, hora);
     loading.value = false
     snackbar.value = true
-  }, 3000)
+  }, 2100)
 }
 
 const isDisabledButton = computed(() => {
@@ -174,16 +174,10 @@ const isDisabledButton = computed(() => {
       </v-col>
 
       <!-- TODO: El botón solo estára disponible si tiene conexión a internet, deshabilitar botón y poner icono de carita triste  mdi-emoticon-sad-outlin -->
-      <v-col col="12" sm="12" class="d-flex justify-space-around align-center ma-2 pa-2"
-      v-if="!isComplete">
-        <v-btn
-          prepend-icon="mdi-check"
-          :loading="loading"
-          :disabled="isDisabledButton"
-          color="primary"
-          @click="load(salon, hora)"
-          size="large" rounded="pill">
-           {{ online? 'Guardar asistencias':'Sin conexión' }}
+      <v-col col="12" sm="12" class="d-flex justify-space-around align-center ma-2 pa-2" v-if="!isComplete">
+        <v-btn prepend-icon="mdi-check" :loading="loading" :disabled="isDisabledButton" color="primary"
+          @click="load(salon, hora)" size="large" rounded="pill">
+          {{ online? 'Guardar asistencias':'Sin conexión' }}
         </v-btn>
 
       </v-col>

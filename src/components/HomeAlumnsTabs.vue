@@ -44,14 +44,14 @@ let tab = ref('1') //default selected
   <!-- <div class="text-subtitle-2 ma-1">Lista de asistencia de alumnos materia # semestre # </div> -->
   <v-card>
       <v-tabs v-model="tab" color="ssecondary" align-tabs="end" grow>
-        <v-tab :value="n" v-for="n in parseInt(veces)">
-           {{ n }}
+        <v-tab :value="n" v-for="n in parseInt(veces)" :color="roomStore.getStatus(salon, n) ? 'green darken-4': 'grey'">
+
            <!-- - {{ roomStore.room[salon+'-'+n].status }} -->
            <!-- {{ roomStore.getStatus(salon, n) }} -->
            <!-- {{ getStatusNow(salon, n) }} -->
            <!-- {{ getStatusNow(salon, n) }} -->
 
-          <v-icon :color="roomStore.getStatus(salon, n) ? 'green darken-4': 'red'" v-if="flags">mdi-flag</v-icon>
+          <v-icon :color="roomStore.getStatus(salon, n) ? 'green darken-4': 'grey'" v-if="flags" size="x-large">{{'mdi-numeric-'+n+'-box-outline'}}</v-icon>
 
 
 
@@ -61,8 +61,8 @@ let tab = ref('1') //default selected
         </v-tab>
         <!-- <v-tab value="2">2
           <v-icon>mdi-timer-sync-outline</v-icon>
-        </v-tab>
-        <v-tab value="3">3
+        </v-tab> -->
+         <!--<v-tab value="3">3
           <v-icon></v-icon>
         </v-tab> -->
       </v-tabs>
