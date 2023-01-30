@@ -18,7 +18,7 @@ const store = useUserStore()
 
 const { toggleTheme, themeIcon, themeIconText } = useMode()
 
-const { refresh, dialogRefresh } = useRefresh()
+const { refresh, dialogRefresh, disabledRefresh } = useRefresh()
 
 console.log(dialogRefresh.value)
 //menu
@@ -35,7 +35,7 @@ const onlineItems = [
 <template>
 
   <div class="text-center">
-    <v-dialog v-model="dialogRefresh">
+    <v-dialog v-model="dialogRefresh" persistent>
       <v-card>
         <v-toolbar color="primary" title="Refrescar datos"></v-toolbar>
         <v-card-text>
@@ -43,10 +43,13 @@ const onlineItems = [
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="green-darken-1" variant="text" @click="dialogRefresh = false">
+          <v-btn color="green-darken-1" variant="text" @click="dialogRefresh = false"
+          :disabled="disabledRefresh"
+          >
             Cerrar
           </v-btn>
-          <v-btn color="red" variant="text" @click="refresh">
+          <v-btn color="red" variant="text" @click="refresh"
+          :disabled="disabledRefresh">
             Deacuerdo
           </v-btn>
         </v-card-actions>

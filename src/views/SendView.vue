@@ -11,7 +11,7 @@
   <v-container fluid>
     <!-- <p class="text-center text-h6 font-weight-regular mt-2"> {{ plantel }}</p> -->
     <p class="text-center text-h6 font-weight-regular">Listas cerradas</p>
-    <p class="text-center text-subtitle-2 font-weight-regular"> {{ fecha }}</p>
+    <p class="text-center text-subtitle-2 font-weight-regular"> Pendientes de enviar</p>
 
     <v-divider></v-divider>
     <!-- From home View -->

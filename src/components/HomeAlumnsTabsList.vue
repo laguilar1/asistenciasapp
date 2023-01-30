@@ -139,7 +139,8 @@ const isDisabledButton = computed(() => {
 
     <v-row no-gutters class="bg-blues" v-if="!isComplete">
       <v-col v-for="alumn,i in listStore.list[newId]" :key="alumn.idAlumno"
-            cols="12" sm="6" md="4" lg="3" xl="2" >
+            cols="12" >
+            <!-- sm="6" md="4" lg="3" xl="2" -->
 
           <v-card @click="changeStatusCards(newId, alumn.idAlumno,alumn.asistencia)" class="ma-2 pa-0"
           :disabled="esEnviado(newId, alumn.idAlumno)"
@@ -179,8 +180,16 @@ const isDisabledButton = computed(() => {
           @click="load(salon, hora)" size="large" rounded="pill">
           {{ online? 'Guardar asistencias':'Sin conexión' }}
         </v-btn>
-
       </v-col>
+
+      <v-col col="12" sm="12" class="d-flex justify-space-around align-center ma-2 pa-2" v-if="!isComplete">
+        <v-btn prepend-icon="mdi-check" :loading="loading" :disabled="isDisabledButton" color="primary"
+          @click="load(salon, hora)" size="large" rounded="pill">
+          {{ online? 'Cerrar lista':'Sin conexión' }}
+        </v-btn>
+      </v-col>
+
+
     </v-row>
 
 </template>

@@ -7,7 +7,7 @@ import { useListStore } from "../store/list";
 import { useRoomStore } from "../store/room";
 import useLogin from "../composables/useLogin";
 
-import useSchool from '../composables/useSchool';
+// import useSchool from '../composables/useSchool';
 
 const useRefresh = () => {
 
@@ -15,16 +15,17 @@ const useRefresh = () => {
   const studentStore = useStudentStore()
   const listStore = useListStore()
   const roomStore = useRoomStore()
-  const { getMainData } = useSchool();
+  // const { getMainData } = useSchool();
   const { loginUrl } = useLogin();
 
   const dialogRefresh = ref(false);
   const loadingRefresh = ref(false);
+  const disabledRefresh = ref(false);
 
 
   const refresh = () => {
 
-  loadingRefresh.value = true
+  disabledRefresh.value = true
   // Borrar caché local-api-cache
   caches.has('local-api-cache').then(function (hasCache) {
     console.log(hasCache);
@@ -39,14 +40,15 @@ const useRefresh = () => {
 
 
     //Rellenar datos
-    getMainData()
-    loadingRefresh.value = false
+    // getMainData()
+    // loadingRefresh.value = false
     // Redireccionar
     setTimeout(() => {
       console.log('El sistema será refrescado')
+      disabledRefresh.value = true
       dialogRefresh.value = false
-      router.push({ path: '/' });
-      // window.location.href = loginUrl() + '/home/';
+      // router.push({ path: '/' });
+      window.location.href = loginUrl() + '/home/';
     }, 800);
 
   }).catch(function () {
@@ -58,6 +60,8 @@ const useRefresh = () => {
   return {
     refresh,
     dialogRefresh,
+    loadingRefresh,
+    disabledRefresh,
   }
 }
 
