@@ -47,18 +47,32 @@ const useSchool = () => {
 
 
     // MODO 2 - Aqui si hay aumento del indexDB
-    localforage.getItem('data')
-        .then((data) => {
-          // Si existe indexDB no hace petición
-          if (!data) {
-            getMainData()
-          } else {
-            console.log('Datos restaurados desde local: ');
-            //Redireccionar a home
-            loading.value = false;
-          }
-      })
-      .catch((err) => {
+    // localforage.getItem('data')
+    //     .then((data) => {
+    //       // Si existe indexDB no hace petición
+    //       if (!data) {
+    //         getMainData()
+    //       } else {
+    //         console.log('Datos restaurados desde local: ');
+    //         //Redireccionar a home
+    //         loading.value = false;
+    //       }
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+
+      // MODO 3, CHECAR SI EXISTE EL CACHÉ (petición)
+      caches.has('local-api-cache').then(function(hasCache) {
+        if (!hasCache) {
+          getMainData()
+          console.log('No existe caché, hace petición');
+        } else {
+          console.log('SI existe caché Datos restaurados desde local:')
+          loading.value = false;
+          // caches.delete('local-api-cache');
+        }
+      }).catch(function() {
         console.log(err);
       });
   };
@@ -119,6 +133,7 @@ const useSchool = () => {
     fetchSchool,
     errorLoading,
     searchStatusHours,
+    getMainData,
   }
 }
 

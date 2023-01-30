@@ -11,7 +11,7 @@ export const useDataStore = defineStore('data', () => {
       schools.value = items;
     }
 
-    const cleanSchoools = () => {
+    const cleanStore = () => {
         schools.value = [];
     }
 
@@ -55,5 +55,5 @@ export const useDataStore = defineStore('data', () => {
   }
 
 
-  return { schools, cleanSchoools, loadSchools, changeStatusTakeList }
+  return { schools, cleanStore, loadSchools, changeStatusTakeList }
 })

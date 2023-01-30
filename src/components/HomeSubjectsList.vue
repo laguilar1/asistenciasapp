@@ -8,7 +8,7 @@ const dataStore = useDataStore()
 const roomStore = useRoomStore()
 
 const { schools } = dataStore;
-console.log('Data store: ',schools)
+// console.log('Data store: ',schools)
 
 // const getStatus =  (idSalon, hora) => {
 //   try {

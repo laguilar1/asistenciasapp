@@ -8,7 +8,7 @@ export const useStudentStore = defineStore('student', () => {
   // Get student from schools[]
   const getStudents = (schoolsArray) => {
     const items = {}
-    console.log(schoolsArray, 'schools array');
+    // console.log(schoolsArray, 'schools array');
     schoolsArray.forEach(school => {
       school.carreras.forEach(carrera => {
           carrera.materias.forEach(materia => {
@@ -24,5 +24,9 @@ export const useStudentStore = defineStore('student', () => {
     return items
   }
 
-  return { students, getStudents}
+   const cleanStore = () => {
+        students.value = {};
+    }
+
+  return { students, getStudents, cleanStore}
 })

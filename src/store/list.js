@@ -83,5 +83,9 @@ export const useListStore = defineStore('list', () => {
     return status
   }
 
-  return { list, generateList, changeStatusList, getSendStatus, changeStatusToSend, isCompletelist}
+   const cleanStore = () => {
+        list.value = {};
+    }
+
+  return { list, generateList, changeStatusList, getSendStatus, changeStatusToSend, isCompletelist, cleanStore}
 })

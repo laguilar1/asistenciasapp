@@ -88,8 +88,12 @@ export const useRoomStore = defineStore('room', () => {
     }
   }
 
+  const cleanStore = () => {
+     room.value = {};
+  }
 
 
 
-  return { room, generateRoom, changeStatusRoom, changeUpdatedRoom, getStatus, getStudents, getDate}
+
+  return { room, generateRoom, changeStatusRoom, changeUpdatedRoom, getStatus, getStudents, getDate, cleanStore}
 })

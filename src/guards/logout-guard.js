@@ -19,6 +19,7 @@ const logoutGuard = async (to, from, next) => {
     // NOta: Se ocupa correr dos veces clear para que tenga efecto
     await localforage.clear();
     await localforage.clear();
+    await caches.delete('local-api-cache');
     window.location.href = loginUrl() + '/logout/';
     return false
     // window.location.href = loginUrl() + '/logout/';

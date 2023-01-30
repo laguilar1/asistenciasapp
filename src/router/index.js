@@ -26,6 +26,12 @@ const routes = [
         // component: () => import('@/views/AlumnsView.vue'),
         component: () => import('@/views/AlumnsView.vue'),
       },
+      {
+        path: '/send',
+        name: 'send',
+        // component: () => import('@/views/AlumnsView.vue'),
+        component: () => import('@/views/SendView.vue'),
+      },
       // {
       //   path: '/auth',
       //   name: 'auth',
