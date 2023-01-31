@@ -20,8 +20,11 @@ const logoutGuard = async (to, from, next) => {
     await localforage.clear();
     await localforage.clear();
     await caches.delete('local-api-cache');
+
+
     window.location.href = loginUrl() + '/logout/';
-    return false
+    // return false
+    return next()
     // window.location.href = loginUrl() + '/logout/';
     // return false
 

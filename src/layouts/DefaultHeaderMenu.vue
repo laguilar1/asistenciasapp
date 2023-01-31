@@ -1,62 +1,54 @@
 <script setup>
+import { ref } from 'vue';
 import { useOnline } from '@vueuse/core'
 
+import ModalSession from '@/components/ModalSession.vue'
+import ModalRefresh from '@/components/ModalRefresh.vue'
+
+import useLogin from "../composables/useLogin";
 import useMode from '../composables/useMode'
-import useRefresh from '../composables/useRefresh'
-
-
+// import useRefresh from '../composables/useRefresh'
 
 // Stores
 import { useUserStore } from "../store/user";
 
+//Emits
+// defineEmits(['eventModalSession', false])
 
 const online = useOnline()
 const store = useUserStore()
 
-
-
+const dialogSesion = ref(false)
+const dialogRefresh = ref(false)
+// const disabledSesion = ref(false)
 
 const { toggleTheme, themeIcon, themeIconText } = useMode()
-
-const { refresh, dialogRefresh, disabledRefresh } = useRefresh()
+// const { refresh, dialogRefresh, disabledRefresh } = useRefresh()
+const { loginUrl } = useLogin();
 
 console.log(dialogRefresh.value)
 //menu
-const onlineItems = [
-  // { id: 1, text: 'Refrescar', icon: 'mdi-web-refresh', link: "/refresh" },
-  { id: 2, text: 'Cerrar Sesión', icon: 'mdi-logout-variant', link: "/logout" },
 
-];
 
+const statusModalSession = (value) => {
+  dialogSesion.value = value
+  // console.log('Since child the Session value is: ', value)
+}
+
+const statusModalRefresh = (value) => {
+  dialogRefresh.value = value
+  // console.log('Since child the Refresh value is: ', value)
+}
 
 
 
 </script>
 <template>
 
-  <div class="text-center">
-    <v-dialog v-model="dialogRefresh" persistent>
-      <v-card>
-        <v-toolbar color="primary" title="Refrescar datos"></v-toolbar>
-        <v-card-text>
-          ¿Desea refrescar los datos de la aplicación? Los datos listas cerradas que no hayan sido enviadas, se van a borrar del la aplicación
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="green-darken-1" variant="text" @click="dialogRefresh = false"
-          :disabled="disabledRefresh"
-          >
-            Cerrar
-          </v-btn>
-          <v-btn color="red" variant="text" @click="refresh"
-          :disabled="disabledRefresh">
-            Deacuerdo
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </div>
+  <!-- Dialog Session -->
+  <ModalSession :modal="dialogSesion" @emitClose="statusModalSession" />
 
+  <ModalRefresh :modal="dialogRefresh" @emitClose="statusModalRefresh"/>
 
   <v-menu location="bottom">
     <template v-slot:activator="{ props }">
@@ -96,14 +88,12 @@ const onlineItems = [
           <v-list-item-title>Refrescar</v-list-item-title>
         </v-list-item>
 
-        <template v-for="(item, index) in onlineItems" :key="index">
-          <v-list-item :value="index" :to="item.link">
-            <template v-slot:prepend>
-              <v-icon :icon="item.icon"></v-icon>
-            </template>
-            <v-list-item-title>{{ item.text }}</v-list-item-title>
-          </v-list-item>
-        </template>
+        <v-list-item @click="dialogSesion = true">
+          <template v-slot:prepend>
+            <v-icon icon="mdi-logout-variant"></v-icon>
+          </template>
+          <v-list-item-title>Cerrar Sesión</v-list-item-title>
+        </v-list-item>
 
       </v-list>
 

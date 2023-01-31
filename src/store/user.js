@@ -20,6 +20,7 @@ export const useUserStore = defineStore('user', () => {
       email: null,
       surname: null,
       login: false,
+      date: ''
 
   })
 

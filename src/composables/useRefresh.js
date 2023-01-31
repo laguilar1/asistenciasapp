@@ -44,7 +44,7 @@ const useRefresh = () => {
     // loadingRefresh.value = false
     // Redireccionar
     setTimeout(() => {
-      console.log('El sistema será refrescado')
+      // console.log('El sistema será refrescado')
       disabledRefresh.value = true
       dialogRefresh.value = false
       // router.push({ path: '/' });
