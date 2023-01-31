@@ -12,9 +12,9 @@ export const useRoomStore = defineStore('room', () => {
       school.carreras.forEach(carrera => {
             const {planEstudio} = carrera
         carrera.materias.forEach(materia => {
-              const {Materia} = materia
+              const {mat} = materia
                materia.salones.forEach(salon => {
-                 const { vecesLista, idSalon, alumnos, nombre } = salon
+                 const { vecesLista, idSalon, alumnos, nombreSalon } = salon
                 //  console.log('salon ->', idSalon);
                 //  console.log('veces ->', vecesLista);
                  for (let i = 0; i < vecesLista; i++) {
@@ -28,9 +28,9 @@ export const useRoomStore = defineStore('room', () => {
                    room.value[newId].updated = 0
                    room.value[newId].plantel = plantel
                    room.value[newId].planEstudio = planEstudio
-                   room.value[newId].materia = Materia
-                   room.value[newId].grado = nombre
-                   room.value[newId].fecha = fecha
+                   room.value[newId].materia = mat
+                   room.value[newId].grado = nombreSalon
+                  //  room.value[newId].fecha = fecha
                   //  room.value[newId].students = 0
 
                    alumnos.forEach(alumno => {

@@ -41,10 +41,10 @@ const { schools } = dataStore;
         <!-- <v-list :items="grupos" to='/alumns'></v-list> -->
 
         <v-expansion-panels variant="accordion" class="ma-0">
-          <v-expansion-panel v-for="materia in carrera.materias" :key="materia.IdCurricula" :title="materia.Materia">
+          <v-expansion-panel v-for="materia in carrera.materias" :key="materia.IdCurricula" :title="materia.materia">
             <v-expansion-panel-text>
 
-              <v-list-item v-for="salon, i in materia.salones" :key="i" :value="salon.nombre" active-color="primary" :to='"/alumns/"+salon.idSalon+"/"+salon.vecesLista'
+              <v-list-item v-for="salon, i in materia.salones" :key="i" :value="salon.nombreSalon" active-color="primary" :to='"/alumns/"+salon.idSalon+"/"+salon.vecesLista'
               :disabled="roomStore.getStudents(salon.idSalon)  ? false : true">
                 <!-- :class="item.finalized ?'bg-green-lighten-5' : ''" -->
                 <!-- <template v-slot:prepend>
@@ -52,7 +52,7 @@ const { schools } = dataStore;
                 </template> -->
 
                 <v-list-item-title>
-                  {{ salon.nombre + ' (' + roomStore.getStudents(salon.idSalon) + ')'}}
+                  {{ salon.nombreSalon + ' (' + roomStore.getStudents(salon.idSalon) + ')'}}
                 </v-list-item-title>
 
                 <!-- {{ salon.tomadaLista }} -->

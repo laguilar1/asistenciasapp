@@ -23,8 +23,8 @@ const logoutGuard = async (to, from, next) => {
 
 
     window.location.href = loginUrl() + '/logout/';
-    // return false
-    return next()
+    return false
+    // return next()
     // window.location.href = loginUrl() + '/logout/';
     // return false
 

@@ -2,11 +2,13 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
+
+
 export const useListStore = defineStore('list', () => {
 
   const list = ref({})
 
-  const generateList = (data) => {
+  const generateList = (data, date) => {
     data.forEach(school => {
         school.carreras.forEach(carrera => {
             carrera.materias.forEach(materia => {
@@ -16,7 +18,9 @@ export const useListStore = defineStore('list', () => {
                 //  console.log('veces ->', vecesLista);
                  for (let i = 0; i < vecesLista; i++) {
                    const num = i + 1
-                   const newId = idSalon+'-'+num
+                  //  const newId = long(idSalon, num)
+                   const newId = idSalon + '-' + num + '-' +date
+
 
                    list.value[newId] = []
                    alumnos.forEach(alumno => {

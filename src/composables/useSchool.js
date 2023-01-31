@@ -4,6 +4,8 @@ import { useStudentStore } from "../store/student";
 import { useListStore } from "../store/list";
 import { useRoomStore } from "../store/room";
 
+import useDate from '../composables/useDate'
+
 
 import localforage from "localforage";
 
@@ -32,6 +34,16 @@ const useSchool = () => {
   //     console.log(err);
   //   }
   // }
+// TODO: METERLO EN UN COMPOSABLE DATE O DECLARARLO COMO UN PROVIDE EN MAIN.JS
+  const today  = () => {
+    const d = new Date();
+    let month = parseInt(d.getMonth()) + 1;
+    month = (month < 10 ) ? '0'+month : month
+    let year = d.getFullYear();
+    let day = d.getDate();
+    let full = year+ '-' + month+ '-' +day
+    return full
+  }
 
   const fetchSchool = () => {
 
@@ -79,7 +91,7 @@ const useSchool = () => {
 
   const getMainData = () => {
     setTimeout(() => {
-      axios.get('/profesores/asistencia/3105')
+      axios.get('/profesores/asistenciav2/2775')
         .then((response) => {
           if (response.statusText === 'OK') {
 
@@ -90,7 +102,7 @@ const useSchool = () => {
             studentStore.students = students
 
             // Generate attendance list
-            listStore.generateList(response.data.datos)
+            listStore.generateList(response.data.datos, today())
 
             // Generate rooms
             roomStore.generateRoom(response.data.datos)
