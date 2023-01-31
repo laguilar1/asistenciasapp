@@ -8,6 +8,7 @@ import { useListStore } from "../store/list";
 import { useStudentStore } from "../store/student";
 import { useRoomStore } from "../store/room";
 import { useDataStore } from "../store/data";
+import { useUserStore } from "../store/user";
 
 
 const { statusIcon, statusColor, statusText, statusNext } = useStatus();
@@ -17,6 +18,7 @@ const listStore = useListStore()
 const studentStore = useStudentStore()
 const roomStore = useRoomStore()
 const dataStore = useDataStore()
+const userStore = useUserStore()
 
 
 const props = defineProps({
@@ -30,7 +32,9 @@ const props = defineProps({
   },
 })
 const { hora, salon } = props;
-const newId = salon + '-' + hora;
+const today = userStore.user.date
+console.log('today-- >', today)
+const newId = salon + '-' + hora + '-' + today;
 
 const snackbar = ref(false)
 const text = `Actualizado correctamente`

@@ -4,11 +4,13 @@
   import { useUserStore } from "../store/user";
 
   import useLogin from "../composables/useLogin";
+  import useDate from "../composables/useDate";
 
   // Si entra a esta seccion es porque ya esta autenticado
   const route = useRoute()
   const store = useUserStore()
   const { loginUrl } = useLogin();
+  const { today } = useDate();
 
   const { id, name, email, surname } = route.query
 
@@ -18,6 +20,7 @@
   store.user.email = email;
   store.user.surname = surname;
   store.user.login = true;
+  store.user.date = today();
 
   setTimeout(() => {
     router.push({ path: '/' });

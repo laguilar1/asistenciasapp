@@ -15,6 +15,8 @@ const studentStore = useStudentStore()
 const listStore = useListStore()
 const roomStore = useRoomStore()
 
+const { today } = useDate();
+
 const useSchool = () => {
   const axios = inject('axios')  // inject axios
   // .get('https://jsonplaceholder.typicode.com/users')
@@ -34,16 +36,7 @@ const useSchool = () => {
   //     console.log(err);
   //   }
   // }
-// TODO: METERLO EN UN COMPOSABLE DATE O DECLARARLO COMO UN PROVIDE EN MAIN.JS
-  const today  = () => {
-    const d = new Date();
-    let month = parseInt(d.getMonth()) + 1;
-    month = (month < 10 ) ? '0'+month : month
-    let year = d.getFullYear();
-    let day = d.getDate();
-    let full = year+ '-' + month+ '-' +day
-    return full
-  }
+
 
   const fetchSchool = () => {
 
@@ -105,7 +98,7 @@ const useSchool = () => {
             listStore.generateList(response.data.datos, today())
 
             // Generate rooms
-            roomStore.generateRoom(response.data.datos)
+            roomStore.generateRoom(response.data.datos, today())
 
             loading.value = false;
           }

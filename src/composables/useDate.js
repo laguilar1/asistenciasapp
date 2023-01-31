@@ -8,7 +8,7 @@ const useDate = () => {
     month = (month < 10 ) ? '0'+month : month
     let year = d.getFullYear();
     let day = d.getDate();
-    let full = year+ '-' + month+ '-' +day
+    let full = year + '-' + month + '-' + day
     return full
   }
 

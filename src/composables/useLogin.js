@@ -9,7 +9,7 @@ const useLogin = () => {
   }
 
   return {
-      loginUrl
+    loginUrl,
   }
 }
 

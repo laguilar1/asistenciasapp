@@ -6,7 +6,7 @@ export const useRoomStore = defineStore('room', () => {
 
   const room = ref({})
 
-  const generateRoom = (data) => {
+  const generateRoom = (data, date) => {
     data.forEach(school => {
         const {plantel, fecha} = school
       school.carreras.forEach(carrera => {
@@ -19,7 +19,7 @@ export const useRoomStore = defineStore('room', () => {
                 //  console.log('veces ->', vecesLista);
                  for (let i = 0; i < vecesLista; i++) {
                    const num = i + 1
-                   const newId = idSalon+'-'+num
+                   const newId = idSalon+'-'+num+ '-' +date
                    let numStudents = 0
                    const status = salon.tomadaLista[i];
 
@@ -59,18 +59,18 @@ export const useRoomStore = defineStore('room', () => {
     room.value[newId].updated = status;
   }
 
-  const getStatus =  (idSalon, hora) => {
+  const getStatus =  (idSalon, hora, date) => {
     try {
-      return room.value[idSalon + '-' + (hora)].status
+      return room.value[idSalon + '-' + (hora)+'-'+date].status
     } catch(err) {
       console.log(err)
     }
   }
 
-  const getStudents = (idSalon) => {
+  const getStudents = (idSalon,date) => {
     try {
       // return room[idSalon + '-' + (hora)].status
-      return room.value[idSalon + '-1'].students
+      return room.value[idSalon + '-1-'+date].students
 
     } catch(err) {
       console.error('---',err)

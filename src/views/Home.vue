@@ -7,9 +7,11 @@ import { onMounted } from 'vue'
 import { useUserStore } from "../store/user";
 //Composable
 import  useSchool  from "../composables/useSchool";
+// import  useDate  from "../composables/useDate";
 
 const userStore = useUserStore()
 const { loading, fetchSchool, errorLoading } = useSchool()
+// const { today } = useDate()
 
 
 onMounted(() => {
@@ -22,7 +24,7 @@ onMounted(() => {
 <template>
     <v-container fluid >
       <p class="text-center font-weight-bold text-h5 font-weight-regular mt-2">¡Hola, {{ userStore.user.name }}!</p>
-      <p class="text-center font-italic font-weight-light">{{ userStore.user.email }}</p>
+      <p class="text-center font-italic font-weight-light">{{ userStore.user.email }} - {{ userStore.user.date }}</p>
       <v-divider></v-divider>
       <BarLoading v-if="loading" />
 

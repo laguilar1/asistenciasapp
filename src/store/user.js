@@ -57,6 +57,10 @@ export const useUserStore = defineStore('user', () => {
 
   }
 
+  const getDate = () => {
+    return user.date
+  }
+
   //persitencia con
 
   return {
@@ -67,5 +71,6 @@ export const useUserStore = defineStore('user', () => {
     changeSurName,
     changeLogin,
     cleanStore,
+    getDate,
   }
 })

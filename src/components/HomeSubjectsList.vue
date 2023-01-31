@@ -3,9 +3,13 @@
 //Store
 import { useDataStore } from "../store/data";
 import { useRoomStore } from "../store/room";
+import { useUserStore } from "../store/user";
 
 const dataStore = useDataStore()
 const roomStore = useRoomStore()
+const userStore = useUserStore()
+
+const today = userStore.user.date
 
 const { schools } = dataStore;
 // console.log('Data store: ',schools)
@@ -44,15 +48,14 @@ const { schools } = dataStore;
           <v-expansion-panel v-for="materia in carrera.materias" :key="materia.IdCurricula" :title="materia.materia">
             <v-expansion-panel-text>
 
-              <v-list-item v-for="salon, i in materia.salones" :key="i" :value="salon.nombreSalon" active-color="primary" :to='"/alumns/"+salon.idSalon+"/"+salon.vecesLista'
-              :disabled="roomStore.getStudents(salon.idSalon)  ? false : true">
+              <v-list-item v-for="salon, i in materia.salones" :key="i" :value="salon.nombreSalon" active-color="primary" :to='"/alumns/"+salon.idSalon+"-"+today+"/"+salon.vecesLista'
+              :disabled="roomStore.getStudents(salon.idSalon, today)  ? false : true">
                 <!-- :class="item.finalized ?'bg-green-lighten-5' : ''" -->
                 <!-- <template v-slot:prepend>
                   <v-icon :icon="item.icon"></v-icon>
                 </template> -->
-
                 <v-list-item-title>
-                  {{ salon.nombreSalon + ' (' + roomStore.getStudents(salon.idSalon) + ')'}}
+                  {{ salon.nombreSalon + ' (' + roomStore.getStudents(salon.idSalon, today) + ')'}}
                 </v-list-item-title>
 
                 <!-- {{ salon.tomadaLista }} -->
@@ -61,11 +64,11 @@ const { schools } = dataStore;
                     <div v-for="n in salon.vecesLista">
                         <!-- {{ salon.idSalon + '-' + (n) }} *** -->
                         <!-- {{ roomStore.room[salon.idSalon + '-' + (n)].status }} *** -->
-                        <!-- {{ roomStore.getStatus(salon.idSalon,n) }} *** -->
-                        <!-- {{ roomStore.getStudents(salon.idSalon) }} *** -->
+                        <!-- {{ roomStore.getStatus(salon.idSalon+'-'+today,n) }} *** -->
+                        <!-- {{ roomStore.getStudents(salon.idSalon+'-'+today) }} *** -->
                     </div>
 
-                    <v-icon :color="roomStore.getStatus(salon.idSalon,n) ? 'green darken-4' : 'grey'" :icon="roomStore.getStatus(salon.idSalon,n) ? 'mdi-check' : 'mdi-check'" variant="text" v-for="n in salon.vecesLista"></v-icon>
+                    <v-icon :color="roomStore.getStatus(salon.idSalon,n, today) ? 'green darken-4' : 'grey'" :icon="roomStore.getStatus(salon.idSalon,n, today) ? 'mdi-check' : 'mdi-check'" variant="text" v-for="n in salon.vecesLista"></v-icon>
                     <!-- <v-badge disabled @click.stop
                     :color="roomStore.getStudents(salon.idSalon) ? 'info' : 'grey'"
                     :content="roomStore.getStudents(salon.idSalon)" inline>
