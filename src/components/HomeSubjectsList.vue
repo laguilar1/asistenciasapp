@@ -48,7 +48,7 @@ const { schools } = dataStore;
           <v-expansion-panel v-for="materia in carrera.materias" :key="materia.IdCurricula" :title="materia.materia">
             <v-expansion-panel-text>
 
-              <v-list-item v-for="salon, i in materia.salones" :key="i" :value="salon.nombreSalon" active-color="primary" :to='"/alumns/"+salon.idSalon+"-"+today+"/"+salon.vecesLista'
+              <v-list-item v-for="salon, i in materia.salones" :key="i" :value="salon.nombreSalon" active-color="primary" :to='"/alumns/"+salon.idSalon+"/"+salon.vecesLista'
               :disabled="roomStore.getStudents(salon.idSalon, today)  ? false : true">
                 <!-- :class="item.finalized ?'bg-green-lighten-5' : ''" -->
                 <!-- <template v-slot:prepend>

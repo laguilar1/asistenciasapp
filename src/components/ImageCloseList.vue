@@ -15,7 +15,7 @@ const width = ref(300);
             cover></v-img>
       </v-col>
       <v-col class="text-subtitle-1 text-center" cols="12">
-        <!-- Todos los alumnos ya tienen asistencia -->
+        Lista cerrada pero todavia no enviada
       </v-col>
     </v-row>
   </v-container>

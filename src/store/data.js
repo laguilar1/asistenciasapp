@@ -20,25 +20,30 @@ export const useDataStore = defineStore('data', () => {
   // store.data y store.room (dependen)
   const changeStatusTakeList = (id_salon, hora, status=1) => {
 
+    console.log('changetakelist',id_salon)
     status = parseInt(status)
 
     const idArray = id_salon.split('-')
-    const [cvePlantel, cvePlanEstudio, IdCurricula] = idArray
+    const [cvePlantel, cvePlanEstudio, idCurricula] = idArray
+
+    // console.log('cvePlantel ', cvePlantel)
+    // console.log('cvePlanEstudio ', cvePlanEstudio)
+    // console.log('i ', i)
 
     schools.value.forEach(plantel => {
       if (plantel.cvePlantel === cvePlantel) {
 
-        // console.log(plantel)
         plantel.carreras.forEach(carrera => {
           if (carrera.cvePlanEstudio === cvePlanEstudio) {
 
             carrera.materias.forEach(materia => {
-              if (materia.IdCurricula === IdCurricula) {
+
+              if (materia.idCurricula === idCurricula) {
 
                 materia.salones.forEach(salon => {
-                  if (salon.idSalon === id_salon) {
 
-                    salon.tomadaLista[hora] = status
+                  if (salon.idSalon === id_salon) {
+                    salon.tomadaLista[hora-1] = status
 
                   }
                 });

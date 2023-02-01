@@ -4,8 +4,11 @@ import { useRoute } from 'vue-router'
 import HomeAlumnsTabsList from '@/components/HomeAlumnsTabsList.vue'
 
 import { useRoomStore } from "../store/room";
+import { useUserStore } from "../store/user";
 
 import useSchool from '../composables/useSchool'
+
+
 
 const route = useRoute()
 const { salon } = route.params;
@@ -13,7 +16,9 @@ const { veces } = route.params;
 const { searchStatusHours } = useSchool();
 
 const roomStore = useRoomStore()
+const userStore = useUserStore()
 
+const today = userStore.user.date
 const tomada = searchStatusHours(salon)
 const flags = ref(false)
 // console.log('tomada: ',tomada[1])
@@ -44,14 +49,13 @@ let tab = ref('1') //default selected
   <!-- <div class="text-subtitle-2 ma-1">Lista de asistencia de alumnos materia # semestre # </div> -->
   <v-card>
       <v-tabs v-model="tab" color="ssecondary" align-tabs="end" grow>
-        <v-tab :value="n" v-for="n in parseInt(veces)" :color="roomStore.getStatus(salon, n) ? 'green darken-4': 'grey'">
+        <v-tab :value="n" v-for="n in parseInt(veces)" :color="roomStore.getStatus(salon, n, today) ? 'green darken-4': 'grey'">
 
            <!-- - {{ roomStore.room[salon+'-'+n].status }} -->
-           <!-- {{ roomStore.getStatus(salon, n) }} -->
-           <!-- {{ getStatusNow(salon, n) }} -->
-           <!-- {{ getStatusNow(salon, n) }} -->
-
-          <v-icon :color="roomStore.getStatus(salon, n) ? 'green darken-4': 'grey'" v-if="flags" size="x-large">{{'mdi-numeric-'+n+'-box-outline'}}</v-icon>
+           <!-- {{ roomStore.getStatus(salon, n, today) }} -->
+           <!-- {{ getStatusNow(salon, n, today) }} -->
+           <!-- {{ getStatusNow(salon, n, today) }} -->
+          <v-icon :color="roomStore.getStatus(salon, n, today) ? 'green darken-4': 'grey'" v-if="flags" size="x-large">{{'mdi-numeric-'+n+'-box-outline'}}</v-icon>
 
 
 

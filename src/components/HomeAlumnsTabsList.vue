@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { useOnline } from '@vueuse/core'
-import EmptyComponent from '@/components/EmptyComponent.vue'
+import ImageSaveList from '@/components/ImageSaveList'
 import useStatus from '../composables/useStatus'
 
 import { useListStore } from "../store/list";
@@ -78,32 +78,52 @@ setTimeout(() => {
 
 
 
-const changeStatusToSend = (id_salon, hora) => {
-  const newId = salon + '-' + hora;
+const changeStatusToSend = (id_salon, hora, today) => {
+  const newId = salon + '-' + hora+'-'+today;
+  // 1 = enviado 0 = no enviado 2 = cerrado
   const statusRoom = 1
+  console.log(newId)
 
   // Change status
   roomStore.changeStatusRoom(newId, statusRoom)
   dataStore.changeStatusTakeList(id_salon, hora, statusRoom)
   // Funcion hacer barrido de enviado listStore
+  // Permite solo visualizar los retardos y faltas sin cerrar la lista
   listStore.changeStatusToSend(newId, statusRoom)
 
   // Funcion para saber si ya está completado
-  isComplete.value = listStore.isCompletelist(newId);
-  // console.log('change to send', id_salon, hora)
-
-  // TODO: LUNES HACER LLAMADA A LA API PARA GUARDAR DATOS
-  // TODO:
+  // TODO: CAMBIAR ESTA LOGICA, SE PUEDE CERRAR UNA LISTA
+  //  EN ROOM STATUS
+  // isComplete.value = listStore.isCompletelist(newId);
 
 }
-const load = (salon, hora) => {
+
+
+
+const actionCloseList = (salon, hora, today) => {
+  console.log('close list')
+  const newId = salon + '-' + hora + '-' + today;
+  // 1 = enviado 0 = no enviado 2 = cerrado
+  const statusRoom = 2
+  // Change status
+  roomStore.changeStatusRoom(newId, statusRoom)
+}
+
+
+
+const load = (salon, hora, today) => {
 
   loading.value = true
   setTimeout(() => {
-    // Change status
-    changeStatusToSend(salon, hora);
-    loading.value = false
-    snackbar.value = true
+
+    // TODO: HACER LA PETICIÓN  POST SI TODO ES CORRECTO
+
+        // Change status
+        changeStatusToSend(salon, hora, today);
+        loading.value = false
+        snackbar.value = true
+
+
   }, 2100)
 }
 
@@ -129,7 +149,7 @@ const isDisabledButton = computed(() => {
 
   <!-- <div>HORA {{ hora }} - salon {{ salon }}</div> -->
 
-    <EmptyComponent v-if="isComplete"></EmptyComponent>
+    <ImageSaveList v-if="isComplete"></ImageSaveList>
 
     <v-snackbar v-model="snackbar" rounded="pill" :timeout="timeout" location="bottom right">
       <v-icon color="green">mdi-check-circle</v-icon>
@@ -179,17 +199,19 @@ const isDisabledButton = computed(() => {
       </v-col>
 
       <!-- TODO: El botón solo estára disponible si tiene conexión a internet, deshabilitar botón y poner icono de carita triste  mdi-emoticon-sad-outlin -->
-      <v-col col="12" sm="12" class="d-flex justify-space-around align-center ma-2 pa-2" v-if="!isComplete">
-        <v-btn prepend-icon="mdi-check" :loading="loading" :disabled="isDisabledButton" color="primary"
-          @click="load(salon, hora)" size="large" rounded="pill">
-          {{ online? 'Guardar asistencias':'Sin conexión' }}
+
+
+      <v-col col="5" sm="5" class="d-flex justify-space-around align-center ma-2 pa-2 " v-if="!isComplete" >
+        <v-btn :loading="loading" color="primary"
+          @click="actionCloseList(salon, hora, today)" size="large" rounded="pill">
+          Cerrar lista
         </v-btn>
       </v-col>
 
-      <v-col col="12" sm="12" class="d-flex justify-space-around align-center ma-2 pa-2" v-if="!isComplete">
-        <v-btn prepend-icon="mdi-check" :loading="loading" :disabled="isDisabledButton" color="primary"
-          @click="load(salon, hora)" size="large" rounded="pill">
-          {{ online? 'Cerrar lista':'Sin conexión' }}
+      <v-col col="5" sm="5" class="d-flex justify-space-around align-center ma-2 pa-2 " v-if="!isComplete">
+        <v-btn :loading="loading" :disabled="isDisabledButton" color="primary"
+          @click="load(salon, hora, today)" size="large" rounded="pill">
+          {{ online? 'Enviar lista':'Enviar lista' }}
         </v-btn>
       </v-col>
 

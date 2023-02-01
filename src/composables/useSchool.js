@@ -84,7 +84,7 @@ const useSchool = () => {
 
   const getMainData = () => {
     setTimeout(() => {
-      axios.get('/profesores/asistenciav2/2775')
+      axios.get('/profesores/asistencia/2775')
         .then((response) => {
           if (response.statusText === 'OK') {
 
