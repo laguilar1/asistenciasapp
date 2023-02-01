@@ -21,11 +21,6 @@ const closeModal = () => {
   emit('emitClose',false) //Señalas el emit y el valor a enviar
 }
 
-// Debe ser a la ruta de la app para borrar datos internos
-const closeRefresh = () => {
-  disabledRefresh.value = true
-  router.push('/logout')
-}
 </script>
 <template>
   <!-- Dialogo sesión -->
