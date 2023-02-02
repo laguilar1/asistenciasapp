@@ -1,15 +1,18 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { toRefs, toRef, ref, computed } from 'vue';
 import { useOnline } from '@vueuse/core'
+
 import ImageSaveList from '@/components/ImageSaveList'
 import ImageCloseList from '@/components/ImageCloseList'
+import ModalSave from '@/components/ModalSave.vue'
+
 import useStatus from '../composables/useStatus'
 
-import { useListStore } from "../store/list";
-import { useStudentStore } from "../store/student";
-import { useRoomStore } from "../store/room";
-import { useDataStore } from "../store/data";
-import { useUserStore } from "../store/user";
+import { useListStore }     from "../store/list";
+import { useStudentStore }  from "../store/student";
+import { useRoomStore }     from "../store/room";
+import { useDataStore }     from "../store/data";
+import { useUserStore }     from "../store/user";
 
 
 const { statusIcon, statusColor, statusText, statusNext } = useStatus();
@@ -46,14 +49,15 @@ console.log(newId)
 const snackbar = ref(false)
 const text = `Actualizado correctamente`
 const timeout = 2000
-
+const dialogSave = ref(false)
 // Example send button
 const loading = ref(false);
 // const loadingBody = ref(true)
 // console.log(hora)
 // console.log(salon)
 // setTimeout(() => {
-//
+//   status.value = roomStore.room[newId].status
+//   status = ref(roomStore.room[newId].status)
 // }, 1000);
 
 
@@ -96,16 +100,9 @@ const changeStatusToSend = (id_salon, hora, today) => {
 }
 
 
-
-const actionCloseList = (salon, hora, today) => {
-  console.log('close list')
-  const newId = salon + '-' + hora + '-' + today;
-  // 1 = enviado 0 = no enviado 2 = cerrado
-  const statusRoom = 2
-  // Change status
-  roomStore.changeStatusRoom(newId, statusRoom)
+const statusModalSave = (value) => {
+  dialogSave.value = value
 }
-
 
 
 const load = (salon, hora, today) => {
@@ -144,10 +141,18 @@ const isDisabledButton = computed(() => {
 </script>
 <template>
 
+    <!-- Dialog Save -->
+    <ModalSave
+    :modal="dialogSave"
+    :salon="salon"
+    :hora="hora"
+    :date="today"
+    @emitClose="statusModalSave" />
+
   <!-- <div>HORA {{ hora }} - salon {{ salon }}</div> -->
       {{ roomStore.room[newId].status }}
-    <ImageSaveList v-if="roomStore.room[newId].status===1"></ImageSaveList>
-    <ImageCloseList v-if="roomStore.room[newId].status===2"></ImageCloseList>
+    <ImageSaveList v-if="roomStore.room[newId].status ===1"></ImageSaveList>
+    <ImageCloseList v-if="roomStore.room[newId].status ===2"></ImageCloseList>
 
     <v-snackbar v-model="snackbar" rounded="pill" :timeout="timeout" location="bottom right">
       <v-icon color="green">mdi-check-circle</v-icon>
@@ -198,34 +203,19 @@ const isDisabledButton = computed(() => {
 
 
       <v-col col="5" sm="5" class="d-flex justify-space-around align-center ma-2 pa-2 " v-if="!roomStore.room[newId].status" >
-        <v-btn :loading="loading" color="info"
+        <v-btn :loading="loading" color="secondary"
           to="/" size="large" rounded="pill">
-          <v-icon>mdi-arrow-left</v-icon>
+          <v-icon color="white">mdi-arrow-left</v-icon>
 
         </v-btn>
       </v-col>
-
-
-      <!-- TODO: HACER UNA MODAL EN EL CUAL LE INDIQUE SI QUIERE CERRAR LA LISTA O LA QUIERE ENVIAR CON ALGUNA LEYENDA INDICANDO LA DIFERENCIA ENTRE CADA UNO  así quedaria un solo boton-->
-
-      <!-- TODO: EL CODIGO DE ACCION PARA ENVIAR O CERRAR QUEDARIA EN LA MODAL -->
 
       <!-- TODO: HACER CODIGO PARA BLOQUEAR LAS HORAS POSTERIORES QUE NO TENGA EL ESTATUS 1 DE ENVIADO O 2 DE CERRADO OSEA ESTÉ EN 0 -->
 
-      <!-- TODO: LIMPIAR EL CODIGO DE TABS PARA QUE NO DUPLIQUE -->
-
-      <!-- TODO: CREAR FUNCION PARA EL COLOR DE ESTADO 2 QUE ES AMARILLO -->
-      <v-col col="5" sm="5" class="d-flex justify-space-around align-center ma-2 pa-2 " v-if="!roomStore.room[newId].status" >
-        <v-btn :loading="loading" color="primary"
-          @click="actionCloseList(salon, hora, today)" size="large" rounded="pill">
-          Cerrar lista
-        </v-btn>
-      </v-col>
-
       <v-col col="5" sm="5" class="d-flex justify-space-around align-center ma-2 pa-2 " v-if="(roomStore.room[newId].status === 1) ? false : true ">
-        <v-btn :loading="loading" :disabled="isDisabledButton" color="primary"
-          @click="load(salon, hora, today)" size="large" rounded="pill">
-          {{ online? 'Enviar lista':'Enviar lista' }}
+        <v-btn :disabled="isDisabledButton" color="primary"
+          @click="dialogSave = true" size="large" rounded="pill">
+          {{ online? 'Cerrar o enviar':'Cerrar o enviar' }}
         </v-btn>
       </v-col>
 

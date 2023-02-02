@@ -70,7 +70,7 @@ const useSchool = () => {
       // MODO 3, CHECAR SI EXISTE EL CACHÉ (petición)
       caches.has('local-api-cache').then(function(hasCache) {
         if (!hasCache) {
-          getMainData()
+          getMainData(today())
           console.log('No existe caché, hace petición');
         } else {
           console.log('SI existe caché Datos restaurados desde local:')
@@ -82,7 +82,7 @@ const useSchool = () => {
       });
   };
 
-  const getMainData = () => {
+  const getMainData = (date) => {
     setTimeout(() => {
       axios.get('/profesores/asistencia/2775')
         .then((response) => {
@@ -95,10 +95,10 @@ const useSchool = () => {
             studentStore.students = students
 
             // Generate attendance list
-            listStore.generateList(response.data.datos, today())
+            listStore.generateList(response.data.datos, date)
 
             // Generate rooms
-            roomStore.generateRoom(response.data.datos, today())
+            roomStore.generateRoom(response.data.datos, date)
 
             loading.value = false;
           }

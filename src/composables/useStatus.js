@@ -25,7 +25,10 @@ const useStatus = () => {
   }
 
   const statusTextList = (status) => {
-    status = status.toString()
+    const type = typeof(status)
+    console.log(type)
+    status = (typeof(status) === 'number') ? status.toString() : status
+    // status = status.toString()
     if (status === '0') { return 'no enviado' }
     else if (status === '2') { return 'cerrado' }
     return 'enviado'

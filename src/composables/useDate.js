@@ -13,8 +13,18 @@ const useDate = () => {
     return full
   }
 
+  const ddmmyyyy = (date) => {
+    const dateArray = date.split("-")
+    const year = dateArray[0]
+    const month = dateArray[1]
+    const day = dateArray[2]
+    let format = day + '-' + month + '-' + year
+    return format
+  }
+
   return {
     today,
+    ddmmyyyy,
   }
 }
 

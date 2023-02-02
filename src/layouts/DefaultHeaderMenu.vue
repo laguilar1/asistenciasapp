@@ -26,7 +26,7 @@ const { toggleTheme, themeIcon, themeIconText } = useMode()
 // const { refresh, dialogRefresh, disabledRefresh } = useRefresh()
 const { loginUrl } = useLogin();
 
-console.log(dialogRefresh.value)
+// console.log(dialogRefresh.value)
 //menu
 
 
@@ -48,6 +48,7 @@ const statusModalRefresh = (value) => {
   <!-- Dialog Session -->
   <ModalSession :modal="dialogSesion" @emitClose="statusModalSession" />
 
+  <!-- Dialog Refresh -->
   <ModalRefresh :modal="dialogRefresh" @emitClose="statusModalRefresh"/>
 
   <v-menu location="bottom">
