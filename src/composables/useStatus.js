@@ -17,11 +17,18 @@ const useStatus = () => {
     return 'red'
   }
 
-  const statusColorlist = (status) => {
+  const statusColorList = (status) => {
     status = status.toString()
     if (status === '0') { return 'grey' }
     else if (status === '2') { return 'warning' }
     return 'green'
+  }
+
+  const statusTextList = (status) => {
+    status = status.toString()
+    if (status === '0') { return 'no enviado' }
+    else if (status === '2') { return 'cerrado' }
+    return 'enviado'
   }
 
   const statusIcon = (status) => {
@@ -41,7 +48,8 @@ const useStatus = () => {
   return {
     statusIcon,
     statusColor,
-    statusColorlist,
+    statusColorList,
+    statusTextList,
     statusText,
     statusNext,
   }

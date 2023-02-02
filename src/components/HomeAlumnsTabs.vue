@@ -14,7 +14,7 @@ import useStatus from '../composables/useStatus'
 const route = useRoute()
 const { salon, hora, date:today } = route.params;
 const { searchStatusHours } = useSchool();
-const { statusColorlist } = useStatus();
+const { statusColorList } = useStatus();
 
 const roomStore = useRoomStore()
 const userStore = useUserStore()
@@ -50,14 +50,14 @@ let tab = ref('1') //default selected
   <!-- <div class="text-subtitle-2 ma-1">Lista de asistencia de alumnos materia # semestre # </div> -->
   <v-card>
       <v-tabs v-model="tab" color="ssecondary" align-tabs="end" grow>
-        <v-tab  :color="statusColorlist(roomStore.getStatus(salon, hora, today))">
+        <v-tab  :color="statusColorList(roomStore.getStatus(salon, hora, today))">
 
            <!-- - {{ roomStore.room[salon+'-'+n].status }} -->
            <!-- {{ roomStore.getStatus(salon, n, today) }} -->
            <!-- {{ getStatusNow(salon, n, today) }} -->
            <!-- {{ getStatusNow(salon, n, today) }} -->
 
-          <v-icon :color="statusColorlist(roomStore.getStatus(salon, hora, today))" v-if="flags" size="x-large">{{'mdi-numeric-'+hora+'-circle-outline'}}</v-icon>
+          <v-icon :color="statusColorList(roomStore.getStatus(salon, hora, today))" v-if="flags" size="x-large">{{'mdi-numeric-'+hora+'-circle-outline'}}</v-icon>
           ª HORA
 
 

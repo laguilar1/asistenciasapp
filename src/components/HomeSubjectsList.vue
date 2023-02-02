@@ -14,7 +14,7 @@ const userStore = useUserStore()
 const today = userStore.user.date
 
 const { schools } = dataStore;
-const { statusColorlist } = useStatus();
+const { statusColorList, statusTextList } = useStatus();
 // console.log('Data store: ',schools)
 
 // const getStatus =  (idSalon, hora) => {
@@ -60,12 +60,12 @@ const { statusColorlist } = useStatus();
                         :to='"/alumns/" + salon.idSalon + "/"+n+"/"+today'
                         :disabled="roomStore.getStudents(salon.idSalon, today)  ? false : true">
 
-                        <v-list-item-title>
-                         HORA {{ n }}
+                        <v-list-item-title color="blue">
+                         {{ n }}ª Hora
                         </v-list-item-title>
 
                         <template v-slot:append>
-                          <v-icon :color="statusColorlist(roomStore.getStatus(salon.idSalon, n, today))"
+                          <v-icon :color="statusColorList(roomStore.getStatus(salon.idSalon, n, today))"
                             icon="mdi-check" variant="text"
                             ></v-icon>
                         </template>
