@@ -11,7 +11,7 @@ const width = ref(300);
     <v-row class="fill-height" align-content="center" justify="center">
 
       <v-col cols="6">
-          <v-img :aspect-ratio="aspectRatio" :width="width" src="/img/empty.png"
+          <v-img :aspect-ratio="aspectRatio" :width="width" src="/img/warning.png"
             cover></v-img>
       </v-col>
       <v-col class="text-subtitle-1 text-center" cols="12">

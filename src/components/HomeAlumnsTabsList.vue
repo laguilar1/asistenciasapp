@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue';
 import { useOnline } from '@vueuse/core'
 import ImageSaveList from '@/components/ImageSaveList'
+import ImageCloseList from '@/components/ImageCloseList'
 import useStatus from '../composables/useStatus'
 
 import { useListStore } from "../store/list";
@@ -30,11 +31,17 @@ const props = defineProps({
     type: String,
     required: true
   },
+  date: {
+    type: String,
+    required: true
+  },
 })
-const { hora, salon } = props;
-const today = userStore.user.date
+const { hora, salon, date } = props;
+const today = date
+// const today = userStore.user.date
 console.log('today-- >', today)
 const newId = salon + '-' + hora + '-' + today;
+console.log(newId)
 
 const snackbar = ref(false)
 const text = `Actualizado correctamente`
@@ -42,7 +49,6 @@ const timeout = 2000
 
 // Example send button
 const loading = ref(false);
-const isComplete = ref(true)
 // const loadingBody = ref(true)
 // console.log(hora)
 // console.log(salon)
@@ -67,15 +73,6 @@ const esEnviado = (newId, idAlumno) => {
   return result
   // return false
 }
-
-
-// verify if list is complete
-setTimeout(() => {
-  isComplete.value = listStore.isCompletelist(newId);
-  // console.log(listStore.isCompletelist(newId), '<--')
-}, 150);
-
-
 
 
 const changeStatusToSend = (id_salon, hora, today) => {
@@ -148,8 +145,9 @@ const isDisabledButton = computed(() => {
 <template>
 
   <!-- <div>HORA {{ hora }} - salon {{ salon }}</div> -->
-
-    <ImageSaveList v-if="isComplete"></ImageSaveList>
+      {{ roomStore.room[newId].status }}
+    <ImageSaveList v-if="roomStore.room[newId].status===1"></ImageSaveList>
+    <ImageCloseList v-if="roomStore.room[newId].status===2"></ImageCloseList>
 
     <v-snackbar v-model="snackbar" rounded="pill" :timeout="timeout" location="bottom right">
       <v-icon color="green">mdi-check-circle</v-icon>
@@ -161,7 +159,7 @@ const isDisabledButton = computed(() => {
       </template>
     </v-snackbar>
 
-    <v-row no-gutters class="bg-blues" v-if="!isComplete">
+    <v-row no-gutters class="bg-blues" v-if="!roomStore.room[newId].status">
       <v-col v-for="alumn,i in listStore.list[newId]" :key="alumn.idAlumno"
             cols="12" >
             <!-- sm="6" md="4" lg="3" xl="2" -->
@@ -198,17 +196,33 @@ const isDisabledButton = computed(() => {
           </v-card>
       </v-col>
 
-      <!-- TODO: El botón solo estára disponible si tiene conexión a internet, deshabilitar botón y poner icono de carita triste  mdi-emoticon-sad-outlin -->
+
+      <v-col col="5" sm="5" class="d-flex justify-space-around align-center ma-2 pa-2 " v-if="!roomStore.room[newId].status" >
+        <v-btn :loading="loading" color="info"
+          to="/" size="large" rounded="pill">
+          <v-icon>mdi-arrow-left</v-icon>
+
+        </v-btn>
+      </v-col>
 
 
-      <v-col col="5" sm="5" class="d-flex justify-space-around align-center ma-2 pa-2 " v-if="!isComplete" >
+      <!-- TODO: HACER UNA MODAL EN EL CUAL LE INDIQUE SI QUIERE CERRAR LA LISTA O LA QUIERE ENVIAR CON ALGUNA LEYENDA INDICANDO LA DIFERENCIA ENTRE CADA UNO  así quedaria un solo boton-->
+
+      <!-- TODO: EL CODIGO DE ACCION PARA ENVIAR O CERRAR QUEDARIA EN LA MODAL -->
+
+      <!-- TODO: HACER CODIGO PARA BLOQUEAR LAS HORAS POSTERIORES QUE NO TENGA EL ESTATUS 1 DE ENVIADO O 2 DE CERRADO OSEA ESTÉ EN 0 -->
+
+      <!-- TODO: LIMPIAR EL CODIGO DE TABS PARA QUE NO DUPLIQUE -->
+
+      <!-- TODO: CREAR FUNCION PARA EL COLOR DE ESTADO 2 QUE ES AMARILLO -->
+      <v-col col="5" sm="5" class="d-flex justify-space-around align-center ma-2 pa-2 " v-if="!roomStore.room[newId].status" >
         <v-btn :loading="loading" color="primary"
           @click="actionCloseList(salon, hora, today)" size="large" rounded="pill">
           Cerrar lista
         </v-btn>
       </v-col>
 
-      <v-col col="5" sm="5" class="d-flex justify-space-around align-center ma-2 pa-2 " v-if="!isComplete">
+      <v-col col="5" sm="5" class="d-flex justify-space-around align-center ma-2 pa-2 " v-if="(roomStore.room[newId].status === 1) ? false : true ">
         <v-btn :loading="loading" :disabled="isDisabledButton" color="primary"
           @click="load(salon, hora, today)" size="large" rounded="pill">
           {{ online? 'Enviar lista':'Enviar lista' }}

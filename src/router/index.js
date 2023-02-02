@@ -21,7 +21,7 @@ const routes = [
         // component: '/views/Home.vue',
       },
       {
-        path: '/alumns/:salon/:veces',
+        path: '/alumns/:salon/:hora/:date',
         name: 'alumns',
         // component: () => import('@/views/AlumnsView.vue'),
         component: () => import('@/views/AlumnsView.vue'),

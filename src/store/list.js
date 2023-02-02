@@ -76,20 +76,20 @@ export const useListStore = defineStore('list', () => {
 
   }
 
-  const isCompletelist = (newId) => {
-    let status = true
-    // Si hay un registro en false devuelve false
-    list.value[newId].forEach(student => {
-      if (!student.enviado) {
-        status = false
-      }
-    });
-    return status
-  }
+  // const isCompletelist = (newId) => {
+  //   let status = true
+  //   // Si hay un registro en false devuelve false
+  //   list.value[newId].forEach(student => {
+  //     if (!student.enviado) {
+  //       status = false
+  //     }
+  //   });
+  //   return status
+  // }
 
    const cleanStore = () => {
         list.value = {};
     }
 
-  return { list, generateList, changeStatusList, getSendStatus, changeStatusToSend, isCompletelist, cleanStore}
+  return { list, generateList, changeStatusList, getSendStatus, changeStatusToSend, cleanStore}
 })

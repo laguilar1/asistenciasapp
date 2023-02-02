@@ -7,18 +7,19 @@ import { useRoomStore } from "../store/room";
 import { useUserStore } from "../store/user";
 
 import useSchool from '../composables/useSchool'
+import useStatus from '../composables/useStatus'
 
 
 
 const route = useRoute()
-const { salon } = route.params;
-const { veces } = route.params;
+const { salon, hora, date:today } = route.params;
 const { searchStatusHours } = useSchool();
+const { statusColorlist } = useStatus();
 
 const roomStore = useRoomStore()
 const userStore = useUserStore()
 
-const today = userStore.user.date
+// const today = userStore.user.date
 const tomada = searchStatusHours(salon)
 const flags = ref(false)
 // console.log('tomada: ',tomada[1])
@@ -49,14 +50,15 @@ let tab = ref('1') //default selected
   <!-- <div class="text-subtitle-2 ma-1">Lista de asistencia de alumnos materia # semestre # </div> -->
   <v-card>
       <v-tabs v-model="tab" color="ssecondary" align-tabs="end" grow>
-        <v-tab :value="n" v-for="n in parseInt(veces)" :color="roomStore.getStatus(salon, n, today) ? 'green darken-4': 'grey'">
+        <v-tab  :color="statusColorlist(roomStore.getStatus(salon, hora, today))">
 
            <!-- - {{ roomStore.room[salon+'-'+n].status }} -->
            <!-- {{ roomStore.getStatus(salon, n, today) }} -->
            <!-- {{ getStatusNow(salon, n, today) }} -->
            <!-- {{ getStatusNow(salon, n, today) }} -->
-          <v-icon :color="roomStore.getStatus(salon, n, today) ? 'green darken-4': 'grey'" v-if="flags" size="x-large">{{'mdi-numeric-'+n+'-box-outline'}}</v-icon>
 
+          <v-icon :color="statusColorlist(roomStore.getStatus(salon, hora, today))" v-if="flags" size="x-large">{{'mdi-numeric-'+hora+'-circle-outline'}}</v-icon>
+          ª HORA
 
 
 
@@ -73,9 +75,9 @@ let tab = ref('1') //default selected
 
       <v-card-text>
         <v-window v-model="tab">
-          <v-window-item :value="n" v-for="n in parseInt(veces)">
+          <v-window-item>
             <!-- Contenido de la primera hora -->
-            <HomeAlumnsTabsList :hora="String(n)" :salon="salon" />
+            <HomeAlumnsTabsList :hora="String(hora)" :salon="salon" :date="today"/>
           </v-window-item>
 
         </v-window>

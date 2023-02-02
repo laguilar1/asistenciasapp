@@ -35,7 +35,7 @@ const closeModal = () => {
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="green-darken-1" variant="text" @click="closeModal"  :disabled="disabledRefresh">
-            Cerrar
+            Cancelar
           </v-btn>
           <v-btn color="red" variant="text" @click="refresh" :disabled="disabledRefresh">
             Deacuerdo

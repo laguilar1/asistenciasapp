@@ -17,6 +17,13 @@ const useStatus = () => {
     return 'red'
   }
 
+  const statusColorlist = (status) => {
+    status = status.toString()
+    if (status === '0') { return 'grey' }
+    else if (status === '2') { return 'warning' }
+    return 'green'
+  }
+
   const statusIcon = (status) => {
     status = status.toString()
     if (status === '1') { return 'mdi-check-circle-outline' }
@@ -34,6 +41,7 @@ const useStatus = () => {
   return {
     statusIcon,
     statusColor,
+    statusColorlist,
     statusText,
     statusNext,
   }

@@ -5,6 +5,8 @@ import { useDataStore } from "../store/data";
 import { useRoomStore } from "../store/room";
 import { useUserStore } from "../store/user";
 
+import useStatus from '../composables/useStatus'
+
 const dataStore = useDataStore()
 const roomStore = useRoomStore()
 const userStore = useUserStore()
@@ -12,6 +14,7 @@ const userStore = useUserStore()
 const today = userStore.user.date
 
 const { schools } = dataStore;
+const { statusColorlist } = useStatus();
 // console.log('Data store: ',schools)
 
 // const getStatus =  (idSalon, hora) => {
@@ -48,36 +51,31 @@ const { schools } = dataStore;
           <v-expansion-panel v-for="materia in carrera.materias" :key="materia.IdCurricula" :title="materia.materia">
             <v-expansion-panel-text>
 
-              <v-list-item v-for="salon, i in materia.salones" :key="i" :value="salon.nombreSalon" active-color="primary" :to='"/alumns/"+salon.idSalon+"/"+salon.vecesLista'
-              :disabled="roomStore.getStudents(salon.idSalon, today)  ? false : true">
-                <!-- :class="item.finalized ?'bg-green-lighten-5' : ''" -->
-                <!-- <template v-slot:prepend>
-                  <v-icon :icon="item.icon"></v-icon>
-                </template> -->
-                <v-list-item-title>
-                  {{ salon.nombreSalon + ' (' + roomStore.getStudents(salon.idSalon, today) + ')'}}
-                </v-list-item-title>
+              <v-expansion-panels variant="accordion" class="ma-0">
+                <v-expansion-panel v-for="salon, i in materia.salones" :key="i" :value="salon.nombreSalon"
+                  :title="salon.nombreSalon + ' (' + roomStore.getStudents(salon.idSalon, today) + ' alumnos)'">
+                  <v-expansion-panel-text>
 
-                <!-- {{ salon.tomadaLista }} -->
-                <template v-slot:append>
-                  <!-- <v-btn color="green darken-3" :icon="item.finalized ? 'mdi-check' : ''" variant="text"></v-btn> -->
-                    <div v-for="n in salon.vecesLista">
-                        <!-- {{ salon.idSalon + '-' + (n) }} *** -->
-                        <!-- {{ roomStore.room[salon.idSalon + '-' + (n)].status }} *** -->
-                        <!-- {{ roomStore.getStatus(salon.idSalon+'-'+today,n) }} *** -->
-                        <!-- {{ roomStore.getStudents(salon.idSalon+'-'+today) }} *** -->
-                    </div>
+                      <v-list-item v-for="n in parseInt(salon.vecesLista)" :key="n" :value="salon.nombreSalon" active-color="primary"
+                        :to='"/alumns/" + salon.idSalon + "/"+n+"/"+today'
+                        :disabled="roomStore.getStudents(salon.idSalon, today)  ? false : true">
 
-                    <v-icon :color="roomStore.getStatus(salon.idSalon,n, today) ? 'green darken-4' : 'grey'" :icon="roomStore.getStatus(salon.idSalon,n, today) ? 'mdi-check' : 'mdi-check'" variant="text" v-for="n in salon.vecesLista"></v-icon>
-                    <!-- <v-badge disabled @click.stop
-                    :color="roomStore.getStudents(salon.idSalon) ? 'info' : 'grey'"
-                    :content="roomStore.getStudents(salon.idSalon)" inline>
-                    </v-badge> -->
-                    <!-- <v-icon :color="tomada ? 'green darken-4' : 'red'" :icon="tomada ? 'mdi-flag' : 'mdi-flag'" variant="text" v-for="n in salon.vecesLista">{{ i }}</v-icon> -->
+                        <v-list-item-title>
+                         HORA {{ n }}
+                        </v-list-item-title>
 
-                </template>
+                        <template v-slot:append>
+                          <v-icon :color="statusColorlist(roomStore.getStatus(salon.idSalon, n, today))"
+                            icon="mdi-check" variant="text"
+                            ></v-icon>
+                        </template>
 
-              </v-list-item>
+                      </v-list-item>
+
+
+                  </v-expansion-panel-text>
+                </v-expansion-panel>
+              </v-expansion-panels>
 
             </v-expansion-panel-text>
           </v-expansion-panel>

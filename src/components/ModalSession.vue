@@ -40,7 +40,7 @@ const closeSesion = () => {
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="green-darken-1" variant="text" @click="closeModal"  :disabled="disabledSesion">
-            Cerrar
+            Cancelar
           </v-btn>
           <v-btn color="red" variant="text" @click="closeSesion" :disabled="disabledSesion">
             Deacuerdo
