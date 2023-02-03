@@ -68,9 +68,8 @@ const useSchool = () => {
     //   });
     let reset = localStorage.getItem('reset');
     reset = parseInt(reset)
-    console.log('reset: ', reset)
-    console.log('reset typefo: ', typeof(reset))
-
+    // console.log('reset: ', reset)
+    // console.log('reset typefo: ', typeof(reset))
       // MODO 3, CHECAR SI EXISTE EL CACHÉ (petición)
     caches.has('local-api-cache').then(function (hasCache) {
       console.log('checar contenido caché ',hasCache)
