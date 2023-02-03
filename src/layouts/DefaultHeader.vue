@@ -37,7 +37,7 @@ const router = useRouter()
       <v-icon> mdi-bell-outline </v-icon>
     </v-btn>
 
-    <v-btn v-else class="text-none" stacked>
+    <v-btn v-else class="text-none" @click.stop="router.push('/send')" exact-path  icon>
       <v-badge :content="room.countClosed" color="warning">
         <v-icon>mdi-bell-outline</v-icon>
       </v-badge>

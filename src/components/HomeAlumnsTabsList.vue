@@ -104,36 +104,6 @@ const statusModalSave = (value) => {
   dialogSave.value = value
 }
 
-
-const load = (salon, hora, today) => {
-
-  loading.value = true
-  setTimeout(() => {
-
-    // TODO: HACER LA PETICIÓN  POST SI TODO ES CORRECTO
-
-        // Change status
-        changeStatusToSend(salon, hora, today);
-        loading.value = false
-        snackbar.value = true
-
-
-  }, 2100)
-}
-
-const isDisabledButton = computed(() => {
-  // console.log(online.value);
-  // console.log(loading.value);
-  // if (!online.value) { return true; } //sin conexion
-  // else if (loading.value) { return true; } // cargando loading
-  return (!online.value || loading.value) ? true : false;
-  // return false;
-})
-
-
-
-
-
 // Funcion watcher estárá observando un arbol en  store.list
   // Si vee que todos los alumnos tienen eviado es true
   // Deshabilita el boton de Guardar asistencia
@@ -213,9 +183,9 @@ const isDisabledButton = computed(() => {
       <!-- TODO: HACER CODIGO PARA BLOQUEAR LAS HORAS POSTERIORES QUE NO TENGA EL ESTATUS 1 DE ENVIADO O 2 DE CERRADO OSEA ESTÉ EN 0 -->
 
       <v-col col="5" sm="5" class="d-flex justify-space-around align-center ma-2 pa-2 " v-if="(roomStore.room[newId].status === 1) ? false : true ">
-        <v-btn :disabled="isDisabledButton" color="primary"
+        <v-btn color="primary"
           @click="dialogSave = true" size="large" rounded="pill">
-          {{ online? 'Cerrar o enviar':'Cerrar o enviar' }}
+          {{ online? 'Enviar':'Enviar' }}
         </v-btn>
       </v-col>
 

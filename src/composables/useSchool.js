@@ -66,18 +66,25 @@ const useSchool = () => {
     //   .catch((err) => {
     //     console.log(err);
     //   });
+    let reset = localStorage.getItem('reset');
+    reset = parseInt(reset)
+    console.log('reset: ', reset)
+    console.log('reset typefo: ', typeof(reset))
 
       // MODO 3, CHECAR SI EXISTE EL CACHÉ (petición)
-      caches.has('local-api-cache').then(function(hasCache) {
-        if (!hasCache) {
+    caches.has('local-api-cache').then(function (hasCache) {
+      console.log('checar contenido caché ',hasCache)
+        if (!hasCache || reset) {
           getMainData(today())
-          console.log('No existe caché, hace petición');
+          localStorage.setItem('reset', '0');
+          console.log('No existe caché o está en reset, hace petición');
         } else {
+          localStorage.setItem('reset', '0');
           console.log('SI existe caché Datos restaurados desde local:')
           loading.value = false;
           // caches.delete('local-api-cache');
         }
-      }).catch(function() {
+      }).catch(function(err) {
         console.log(err);
       });
   };

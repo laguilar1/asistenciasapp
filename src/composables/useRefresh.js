@@ -35,6 +35,7 @@ const useRefresh = () => {
       .then((response) => {
           if (response.statusText === 'OK') {
             deleteCache()
+            localStorage.setItem('reset', '1');
           } else {
             console.log('error endpoint')
           }
@@ -45,29 +46,33 @@ const useRefresh = () => {
   }
 
   const deleteCache = () => {
+
     // Borrar caché local-api-cache
-      caches.has('local-api-cache').then(function (hasCache) {
-        console.log(hasCache);
-        if (hasCache) {
-          caches.delete('local-api-cache'); //para que no de error
+     const name = 'local-api-cache'
+      caches.has(name).then(cache => {
+        if (cache) {
+          caches.delete(name)
+            .then((resp) => {
+              console.log('eliminado', resp)
+              if (resp) {
+                // Borrar los storages de pinia
+                dataStore.cleanStore()
+                listStore.cleanStore()
+                studentStore.cleanStore()
+                roomStore.cleanStore()
+                window.location.href = loginUrl() + '/home/';
+              }
+            })
+            .catch((err) => {
+              console.error(err)
+            }); //para que no de error
+          console.log('se eliminó caché')
         }
-        // Borrar los storages de pinia
-        dataStore.cleanStore()
-        listStore.cleanStore()
-        studentStore.cleanStore()
-        roomStore.cleanStore()
+
         //Rellenar datos
         // getMainData()
         // loadingRefresh.value = false
         // Redireccionar
-        setTimeout(() => {
-          // console.log('El sistema será refrescado')
-          disabledRefresh.value = true
-          dialogRefresh.value = false
-          // router.push({ path: '/' });
-          window.location.href = loginUrl() + '/home/';
-        }, 800);
-
       }).catch(function () {
         console.log(err);
       });

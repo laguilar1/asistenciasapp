@@ -102,14 +102,14 @@ const sendList = (newId) => {
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="green-darken-1" variant="text" @click="closeModal">
+          <v-btn variant="text" @click="closeModal">
             Cancelar
           </v-btn>
-          <v-btn variant="text" @click="closeList(newId)" :disabled="disabledButtons">
-            Cerrar Lista
+          <v-btn color="warning" variant="text" @click="closeList(newId)" :disabled="disabledButtons">
+            Cerrar
           </v-btn>
-          <v-btn variant="text" @click="requestList(newId)" :disabled="disabledButtons || !online">
-            Enviar Lista
+          <v-btn color="success" variant="text" @click="requestList(newId)" :disabled="disabledButtons || !online">
+            Enviar
           </v-btn>
         </v-card-actions>
       </v-card>
