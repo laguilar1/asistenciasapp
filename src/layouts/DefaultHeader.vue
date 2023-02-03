@@ -1,6 +1,10 @@
 <script setup>
   import { useRouter } from 'vue-router'
-  import DefaultHeaderMenu from './DefaultHeaderMenu.vue'
+import { useRoomStore } from "../store/room";
+
+import DefaultHeaderMenu from './DefaultHeaderMenu.vue'
+
+const room = useRoomStore();
 
 const router = useRouter()
 
@@ -29,12 +33,16 @@ const router = useRouter()
 
     <v-spacer></v-spacer>
 
-    <v-btn selected-class="" @click.stop="router.push('/send')" exact-path  icon>
+    <v-btn v-if="!room.countClosed" selected-class="" @click.stop="router.push('/send')" exact-path  icon>
       <v-icon> mdi-bell-outline </v-icon>
-      <!-- <v-icon> mdi-bell-badge-outline </v-icon>
-      <v-icon> mdi-bell-check-outline </v-icon>
-      <v-icon> mdi-bell-alert-outline </v-icon> -->
     </v-btn>
+
+    <v-btn v-else class="text-none" stacked>
+      <v-badge :content="room.countClosed" color="warning">
+        <v-icon>mdi-bell-outline</v-icon>
+      </v-badge>
+    </v-btn>
+
     <v-btn selected-class="" @click.stop="router.push('/')" exact-path  icon>
       <v-icon> mdi-home-outline </v-icon>
     </v-btn>

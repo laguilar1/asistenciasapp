@@ -2,20 +2,16 @@
 import { ref } from 'vue';
 
 const aspectRatio = ref(20/20);
-const width = ref(300);
+const width = ref(200);
 
 
 </script>
 <template>
-  <v-container style="height: 300px;">
+  <v-container style="height: 200px;" class="my-10">
     <v-row class="fill-height" align-content="center" justify="center">
-
       <v-col cols="6">
-          <v-img :aspect-ratio="aspectRatio" :width="width" src="/img/warning.png"
-            cover></v-img>
-      </v-col>
-      <v-col class="text-subtitle-1 text-center" cols="12">
-        Lista cerrada pero todavia no enviada
+        <v-img :aspect-ratio="aspectRatio" :width="width" src="/img/warning.png" cover></v-img>
+        <p class="mt-2">La lista actual ha sido cerrada</p>
       </v-col>
     </v-row>
   </v-container>

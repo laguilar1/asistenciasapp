@@ -1,5 +1,5 @@
 // Utilities
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useRoomStore = defineStore('room', () => {
@@ -92,8 +92,29 @@ export const useRoomStore = defineStore('room', () => {
      room.value = {};
   }
 
+  //Computed
+  const countClosed = computed(() => {
+    let n = 0
+    for (const property in room.value) {
+      let status = room.value[property].status
+      if (status === 2) {n++}
+      // console.log(`${property}: ${room.room[property].status}`);
+    }
+    return  n;
+  });
+  // En espera
+  const onHold = computed(() => {
+    let n = 0
+    for (const property in room.value) {
+      let status = room.value[property].status
+      if (status === 0 || status === 2) {n++}
+      // console.log(`${property}: ${room.room[property].status}`);
+    }
+    return  n;
+  });
 
 
 
-  return { room, generateRoom, changeStatusRoom, changeUpdatedRoom, getStatus, getStudents, getDate, cleanStore}
+
+  return { room, generateRoom, changeStatusRoom, changeUpdatedRoom, getStatus, getStudents, getDate, cleanStore, countClosed, onHold}
 })

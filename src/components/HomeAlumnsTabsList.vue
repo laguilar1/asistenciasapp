@@ -150,7 +150,7 @@ const isDisabledButton = computed(() => {
     @emitClose="statusModalSave" />
 
   <!-- <div>HORA {{ hora }} - salon {{ salon }}</div> -->
-      {{ roomStore.room[newId].status }}
+      <!-- {{ roomStore.room[newId].status }} -->
     <ImageSaveList v-if="roomStore.room[newId].status ===1"></ImageSaveList>
     <ImageCloseList v-if="roomStore.room[newId].status ===2"></ImageCloseList>
 
