@@ -8,7 +8,7 @@ import useHeader from '../composables/useHeader'
 
 const axios = inject('axios')  // inject
 
-const { config } = useHeader();
+const { config, getDataRequest } = useHeader();
 
 const props = defineProps({
   modal: {
@@ -65,12 +65,13 @@ const closeList = (newId) => {
   roomStore.changeStatusRoom(newId, statusRoom)
   closeModal()
 }
+console.log(getDataRequest(newId))
 
 const requestList = (newId) => {
   console.log('request list')
   disabledButtons.value = true
-
-  axios.post('profesores/asistencias/asistencia', config)
+  const data = getDataRequest(newId)
+  axios.post('profesores/asistencias/asistencia',data, config)
     .then((response) => {
       if (response.statusText === 'OK') {
 
