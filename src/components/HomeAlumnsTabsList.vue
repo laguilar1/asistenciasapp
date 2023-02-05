@@ -79,25 +79,25 @@ const esEnviado = (newId, idAlumno) => {
 }
 
 
-const changeStatusToSend = (id_salon, hora, today) => {
-  const newId = salon + '-' + hora+'-'+today;
-  // 1 = enviado 0 = no enviado 2 = cerrado
-  const statusRoom = 1
-  console.log(newId)
+// const changeStatusToSend = (id_salon, hora, today) => {
+//   const newId = salon + '-' + hora+'-'+today;
+//   // 1 = enviado 0 = no enviado 2 = cerrado
+//   const statusRoom = 1
+//   console.log(newId)
 
-  // Change status
-  roomStore.changeStatusRoom(newId, statusRoom)
-  dataStore.changeStatusTakeList(id_salon, hora, statusRoom)
-  // Funcion hacer barrido de enviado listStore
-  // Permite solo visualizar los retardos y faltas sin cerrar la lista
-  listStore.changeStatusToSend(newId, statusRoom)
+//   // Change status
+//   roomStore.changeStatusRoom(newId, statusRoom)
+//   dataStore.changeStatusTakeList(id_salon, hora, statusRoom)
+//   // Funcion hacer barrido de enviado listStore
+//   // Permite solo visualizar los retardos y faltas sin cerrar la lista
+//   listStore.changeStatusToSend(newId, statusRoom)
 
-  // Funcion para saber si ya está completado
-  // TODO: CAMBIAR ESTA LOGICA, SE PUEDE CERRAR UNA LISTA
-  //  EN ROOM STATUS
-  // isComplete.value = listStore.isCompletelist(newId);
+//   // Funcion para saber si ya está completado
+//   // TODO: CAMBIAR ESTA LOGICA, SE PUEDE CERRAR UNA LISTA
+//   //  EN ROOM STATUS
+//   // isComplete.value = listStore.isCompletelist(newId);
 
-}
+// }
 
 
 const statusModalSave = (value) => {

@@ -6,7 +6,7 @@ import { useRoomStore } from "../store/room";
 import SendViewList from '@/components/SendViewList.vue'
 import ImageSendList from '@/components/ImageSendList'
 
-const room = useRoomStore();
+const roomStore = useRoomStore();
 
 </script>
 
@@ -21,16 +21,17 @@ const room = useRoomStore();
 
       <v-row>
           <v-col cols="12">
-            <ImageSendList v-if="!room.countClosed"></ImageSendList>
+            <ImageSendList v-if="!roomStore.countClosed"></ImageSendList>
 
             <div v-else class="mt-4 text-subtitle-2">Listas cerradas:</div>
-            <template v-for="value, name, index in room.room">
+            <template v-for="value, name, index in roomStore.room">
               <v-card  class="mt-3" v-if="value.status===2">
                 <SendViewList
                   :plantel="value.plantel"
                   :planEstudio="value.planEstudio"
                   :grado="value.grado"
-                  :status="value.status"/>
+                  :status="value.status"
+                  :newId="name"/>
               </v-card>
             </template>
           </v-col>

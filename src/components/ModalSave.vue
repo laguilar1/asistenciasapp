@@ -22,16 +22,20 @@ const props = defineProps({
     type: String,
     required: true
   },
+  hiddenClose: {
+    type: String,
+    default: "false"
+  }
 })
 const roomStore = useRoomStore()
 const modalState = toRef(props, 'modal')
-const { salon, hora, date } = props
+const { salon, hora, date, hiddenClose } = props
 const newId = salon + '-' + hora + '-' + date;
 const online = useOnline()
 console.log('salon ', salon)
 console.log('hora ', hora)
 console.log('date ', date)
-
+console.log('hiddenClose', typeof (hiddenClose))
 
 const emit = defineEmits(['emitClose']) //Se puede tener mas de un emit
 
@@ -96,16 +100,19 @@ const sendList = (newId) => {
       <v-card>
         <v-toolbar color="primary" title="Cerrar o Enviar lista"></v-toolbar>
         <v-card-text>
-
-          ¿Desea cerrar o enviar la lista? Si cierra la lista podra continuar tomando lista en las siguientes horas sin enviar la lista por internet, si decide enviar la lista la lista se cerrará y será enviada por internet.
-
+          <p v-if="hiddenClose==='false'">
+            ¿Desea cerrar o enviar la lista? Si cierra la lista podra continuar tomando lista en las siguientes horas sin enviar la lista por internet, si decide enviar la lista esta se cerrará y será enviada por internet.
+          </p>
+          <p v-else>
+            ¿Desea enviar la lista?
+          </p>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn variant="text" @click="closeModal">
             Cancelar
           </v-btn>
-          <v-btn color="warning" variant="text" @click="closeList(newId)" :disabled="disabledButtons">
+          <v-btn color="warning" variant="text" @click="closeList(newId)" :disabled="disabledButtons" v-if="hiddenClose==='false'">
             Cerrar
           </v-btn>
           <v-btn color="success" variant="text" @click="requestList(newId)" :disabled="disabledButtons || !online">
