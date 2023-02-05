@@ -12,7 +12,7 @@
   const { loginUrl } = useLogin();
   const { today } = useDate();
 
-  const { id, name, email, surname } = route.query
+  const { id, name, email, surname, token } = route.query
 
   console.log('store params in pinia -------------------------------');
   store.user.id = id;
@@ -21,6 +21,7 @@
   store.user.surname = surname;
   store.user.login = true;
   store.user.date = today();
+  store.user.token = token;
 
   setTimeout(() => {
     router.push({ path: '/' });

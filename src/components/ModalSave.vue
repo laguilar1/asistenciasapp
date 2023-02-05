@@ -3,7 +3,12 @@ import { useRouter } from 'vue-router'
 import { inject, ref, toRef, defineEmits } from 'vue'
 import { useOnline } from '@vueuse/core'
 import { useRoomStore } from "../store/room";
+
+import useHeader from '../composables/useHeader'
+
 const axios = inject('axios')  // inject
+
+const { config } = useHeader();
 
 const props = defineProps({
   modal: {
@@ -65,7 +70,7 @@ const requestList = (newId) => {
   console.log('request list')
   disabledButtons.value = true
 
-  axios.post('profesores/asistencias/asistencia')
+  axios.post('profesores/asistencias/asistencia', config)
     .then((response) => {
       if (response.statusText === 'OK') {
 
@@ -98,13 +103,13 @@ const sendList = (newId) => {
   <div class="text-center">
     <v-dialog v-model="modalState" persistent>
       <v-card>
-        <v-toolbar color="primary" title="Cerrar o Enviar lista"></v-toolbar>
+        <v-toolbar color="primary" :title="(hiddenClose === 'false') ? 'Cerrar o enviar lista':'Enviar lista'"></v-toolbar>
         <v-card-text>
           <p v-if="hiddenClose==='false'">
             ¿Desea cerrar o enviar la lista? Si cierra la lista podra continuar tomando lista en las siguientes horas sin enviar la lista por internet, si decide enviar la lista esta se cerrará y será enviada por internet.
           </p>
           <p v-else>
-            ¿Desea enviar la lista?
+            ¿Está seguro que desea enviar la lista?
           </p>
         </v-card-text>
         <v-card-actions>

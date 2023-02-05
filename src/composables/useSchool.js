@@ -3,7 +3,9 @@ import { useDataStore } from "../store/data";
 import { useStudentStore } from "../store/student";
 import { useListStore } from "../store/list";
 import { useRoomStore } from "../store/room";
+import { useUserStore } from "../store/user";
 
+import useHeader from '../composables/useHeader'
 import useDate from '../composables/useDate'
 
 
@@ -14,8 +16,12 @@ const dataStore = useDataStore()
 const studentStore = useStudentStore()
 const listStore = useListStore()
 const roomStore = useRoomStore()
+const userStore = useUserStore()
+
+console.log('token', userStore.user.token)
 
 const { today } = useDate();
+const { config } = useHeader();
 
 const useSchool = () => {
   const axios = inject('axios')  // inject axios
@@ -90,7 +96,7 @@ const useSchool = () => {
 
   const getMainData = (date) => {
     setTimeout(() => {
-      axios.get('/profesores/asistencia/2775')
+      axios.get('/profesores/asistencia/2775', config)
         .then((response) => {
           if (response.statusText === 'OK') {
 

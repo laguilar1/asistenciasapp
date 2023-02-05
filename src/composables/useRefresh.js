@@ -7,7 +7,7 @@ import { useListStore } from "../store/list";
 import { useRoomStore } from "../store/room";
 import { useUserStore } from "../store/user";
 import useLogin from "../composables/useLogin";
-
+import useHeader from '../composables/useHeader'
 // import useSchool from '../composables/useSchool';
 
 const useRefresh = () => {
@@ -21,6 +21,7 @@ const useRefresh = () => {
   const userStore = useUserStore()
   // const { getMainData } = useSchool();
   const { loginUrl } = useLogin();
+  const { config } = useHeader();
 
   const dialogRefresh = ref(false);
   const loadingRefresh = ref(false);
@@ -31,7 +32,7 @@ const useRefresh = () => {
 
     const id = userStore.user.id
     disabledRefresh.value = true
-    axios.get('profesores/asistencia/'+id+'/actualizar')
+    axios.get('profesores/asistencia/'+id+'/actualizar', config)
       .then((response) => {
           if (response.statusText === 'OK') {
             deleteCache()
