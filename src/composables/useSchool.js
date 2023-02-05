@@ -86,6 +86,7 @@ const useSchool = () => {
         } else {
           localStorage.setItem('reset', '0');
           console.log('SI existe caché Datos restaurados desde local:')
+          roomStore.disabledRoom()
           loading.value = false;
           // caches.delete('local-api-cache');
         }

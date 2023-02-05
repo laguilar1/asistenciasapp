@@ -71,7 +71,7 @@ setTimeout(() => {
 
                       <v-list-item v-for="n in parseInt(salon.vecesLista)" :key="n" :value="salon.nombreSalon" active-color="primary"
                         :to='"/alumns/" + salon.idSalon + "/"+n+"/"+date'
-                        :disabled="roomStore.getStudents(salon.idSalon, date)  ? false : true">
+                        :disabled="roomStore.room[salon.idSalon + '-' + n + '-' + date].disabled">
 
                         <v-list-item-title color="blue">
                          {{ n }}ª Hora

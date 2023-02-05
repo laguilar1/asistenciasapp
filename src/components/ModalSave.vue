@@ -63,6 +63,7 @@ const closeList = (newId) => {
   // Change status
   console.log(newId)
   roomStore.changeStatusRoom(newId, statusRoom)
+  roomStore.disabledRoom()
   closeModal()
 }
 console.log(getDataRequest(newId))
@@ -76,6 +77,7 @@ const requestList = (newId) => {
       if (response.statusText === 'OK') {
 
         sendList() //Cambia status interno
+        roomStore.disabledRoom()
 
       } else {
         console.log('error endpoint')

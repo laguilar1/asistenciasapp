@@ -1,9 +1,11 @@
 // Utilities
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import { useUserStore } from "../store/user";
 
 export const useRoomStore = defineStore('room', () => {
 
+  const userStore = useUserStore()
   const room = ref({})
 
   const generateRoom = (data, date) => {
@@ -30,6 +32,7 @@ export const useRoomStore = defineStore('room', () => {
                    room.value[newId].planEstudio = planEstudio
                    room.value[newId].materia = mat
                    room.value[newId].grado = nombreSalon
+                   room.value[newId].disabled = true
                   //  room.value[newId].fecha = fecha
                   //  room.value[newId].students = 0
 
@@ -42,7 +45,8 @@ export const useRoomStore = defineStore('room', () => {
 
 
                });
-            });
+          });
+         disabledRoom()
         });
     });
   }
@@ -92,6 +96,65 @@ export const useRoomStore = defineStore('room', () => {
      room.value = {};
   }
 
+  const getIdfromNewId = (newId) => {
+    const idArray = newId.split('-')
+    return idArray[0] + '-' + idArray[1] + '-' + idArray[2] + '-' + idArray[3] + '-' + idArray[4]
+  }
+  const getGroupRoom = () => {
+    const {date} = userStore.user
+    let arrayRoom = []
+    let oldId = ''
+    for (const property in room.value) {
+      if (property.includes(date)) {
+        // const idArray = property.split('-')
+        const id = getIdfromNewId(property)
+        if (id !== oldId) {
+          arrayRoom.push(id)
+          oldId = id
+        }
+      }
+    }
+    return arrayRoom
+  }
+
+  const disabledRoom = () => {
+    const {date} = userStore.user
+    // console.log('Running disabledRooms')
+    // Separar todas las claves de room
+    const groupRoom = getGroupRoom()
+    groupRoom.forEach(item => {
+      let count = 1
+      let oldStatus = 0
+      // console.log('item-->', item)
+      for (const property in room.value) {
+        if (property.includes(date)) {
+
+          if (property.includes(item)) {
+
+            if (count === 1) {
+              room.value[property].disabled = false
+              oldStatus = room.value[property].status
+            } else {
+
+              if (oldStatus === 2 || oldStatus === 1 ) {
+                room.value[property].disabled = false
+              } else {
+                room.value[property].disabled = true
+              }
+              oldStatus = room.value[property].status
+            }
+
+            count++
+
+          }
+        }
+      }
+
+    });
+
+  }
+
+
   //Computed
   const countClosed = computed(() => {
     let n = 0
@@ -116,5 +179,5 @@ export const useRoomStore = defineStore('room', () => {
 
 
 
-  return { room, generateRoom, changeStatusRoom, changeUpdatedRoom, getStatus, getStudents, getDate, cleanStore, countClosed, onHold}
+  return { room, generateRoom, changeStatusRoom, changeUpdatedRoom, getStatus, getStudents, getDate, cleanStore, countClosed, onHold, disabledRoom}
 })
