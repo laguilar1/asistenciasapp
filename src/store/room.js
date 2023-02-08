@@ -119,7 +119,7 @@ export const useRoomStore = defineStore('room', () => {
 
   const disabledRoom = () => {
     const {date} = userStore.user
-    // console.log('Running disabledRooms')
+    console.log('Running disabledRooms')
     // Separar todas las claves de room
     const groupRoom = getGroupRoom()
     groupRoom.forEach(item => {

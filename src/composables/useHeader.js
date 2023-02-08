@@ -61,7 +61,11 @@ const useHeader = () => {
 
   return {
     config,
-    getDataRequest
+    getDataRequest,
+    getSalonNewId,
+    getDateNewId,
+    getHoraNewId,
+    getAlumnos,
   }
 }
 

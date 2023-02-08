@@ -3,12 +3,13 @@ import { useRouter } from 'vue-router'
 import { inject, ref, toRef, defineEmits } from 'vue'
 import { useOnline } from '@vueuse/core'
 import { useRoomStore } from "../store/room";
+import { useDataStore } from "../store/data";
 
 import useHeader from '../composables/useHeader'
 
 const axios = inject('axios')  // inject
 
-const { config, getDataRequest } = useHeader();
+const { config, getDataRequest, getSalonNewId, getHoraNewId } = useHeader();
 
 const props = defineProps({
   modal: {
@@ -33,6 +34,7 @@ const props = defineProps({
   }
 })
 const roomStore = useRoomStore()
+const dataStore = useDataStore()
 const modalState = toRef(props, 'modal')
 const { salon, hora, date, hiddenClose } = props
 const newId = salon + '-' + hora + '-' + date;
@@ -63,7 +65,7 @@ const closeList = (newId) => {
   // Change status
   console.log(newId)
   roomStore.changeStatusRoom(newId, statusRoom)
-  roomStore.disabledRoom()
+  // roomStore.disabledRoom()
   closeModal()
 }
 console.log(getDataRequest(newId))
@@ -72,12 +74,14 @@ const requestList = (newId) => {
   console.log('request list')
   disabledButtons.value = true
   const data = getDataRequest(newId)
-  axios.post('profesores/asistencias/asistencia',data, config)
+  axios.post('asistencias/asistencia',data, config)
     .then((response) => {
       if (response.statusText === 'OK') {
 
-        sendList() //Cambia status interno
-        roomStore.disabledRoom()
+        sendList(newId) //Cambia status interno
+        // roomStore.disabledRoom()
+        // TODO: CERRAR LA MODAL, SE QUEDA ABIERTA
+        closeModal()
 
       } else {
         console.log('error endpoint')
@@ -91,13 +95,12 @@ const requestList = (newId) => {
 const sendList = (newId) => {
   // 1 = enviado 0 = no enviado 2 = cerrado
   const statusRoom = 1
+  const id_salon = getSalonNewId(newId)
+  const hora = getHoraNewId(newId)
   console.log(newId)
   // Change status
   roomStore.changeStatusRoom(newId, statusRoom)
   dataStore.changeStatusTakeList(id_salon, hora, statusRoom)
-  // Funcion hacer barrido de enviado listStore
-  // Permite solo visualizar los retardos y faltas sin cerrar la lista
-  // listStore.changeStatusToSend(newId, statusRoom) //TODO: VER SI ES UTIL
 }
 </script>
 <template>
